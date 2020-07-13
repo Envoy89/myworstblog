@@ -1,4 +1,7 @@
 const Application = require('./app');
+const configureDb = require('./db');
+
+configureDb();
 
 let app = new Application();
 
