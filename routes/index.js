@@ -5,7 +5,6 @@ module.exports = function(app) {
 
     app.get('/', async function(req, res) {
         const posts = await Post.find();
-        console.log(posts);
         res.render('index.html', { posts: posts });
     });
 
@@ -19,9 +18,14 @@ module.exports = function(app) {
             if (error) {
                 console.log(error);
             }
-            console.log(document);
         })
 
         res.redirect('/');
     });
+
+    app.get('/post/:name', async (req, res) => {
+        const postName = req.params.name;
+        const post = await Post.findOne({name: postName});
+        res.render('post.html', { post: post });
+    })
 }
