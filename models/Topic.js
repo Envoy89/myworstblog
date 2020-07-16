@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-const postSchema = new Schema({
+const topicSchema = new Schema({
     name: String, 
     text: String
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Topic', topicSchema);

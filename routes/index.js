@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const Post = require('../models/Post');
+const Topic = require('../models/Topic');
 
 router.get('/', async function(req, res) {
-    const posts = await Post.find();
-    res.render('index.html', { posts: posts });
+    const topics = await Topic.find();
+    res.render('index.html', { topics: topics });
 });
 
-router.use('/posts', require('./posts'));
+router.use('/topics', require('./topics'));
 
 module.exports = router;
