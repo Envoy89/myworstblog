@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const auth = require('./auth');
+const isAuth = require('../middleware/auth');
 
-router.get('/', auth.required, (req, res) => {
-    res.render('adminTest.html', { test: 'my name is test'}); 
+router.use(isAuth);
+
+router.get('/', async function(req, res) {
+    res.render('adminTest.html');
 });
 
 module.exports = router;
