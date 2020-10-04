@@ -1,13 +1,13 @@
 const Application = require('./app');
+const config = require('config');
 require('./config/passport'); 
-
-const configureDb = require('./db');
-
-configureDb();
+require('./config/database');
 
 let app = new Application();
 
-app.expressApp.listen(3000, function() {
-    console.log('Listening on port 3000');
+const PORT = config.get('Server.port');
+
+app.expressApp.listen(PORT, function() {
+    console.log(`Listening on port ${PORT}`);
 });
 

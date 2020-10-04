@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
-const router = require('./routes');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const expressSessions = require('express-session');
+
+const router = require('./routes');
 
 class Application {
     constructor() {

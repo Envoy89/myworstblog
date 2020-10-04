@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const config = require('config');
 
-const url = 'mongodb://127.0.0.1:27017/blog';
+const url = config.get('DataBase.url');
 
-module.exports = _ => {
+const configDataBase = () => {
 
     mongoose.connect(url, { useNewUrlParser: true });
 
@@ -16,3 +17,5 @@ module.exports = _ => {
         console.error('connection error:', err);
     });
 }
+
+configDataBase();
