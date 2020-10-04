@@ -1,28 +1,40 @@
-const jwt = require('express-jwt');
+const passport = require('passport');
+const router = require('express').Router();
+const User = require('../models/User');
 
-const getTokenFromHeaders = (req) => {
-  const { headers: { authorization } } = req;
+router.post('/signIn', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/singIn'
+}));
 
-  if(authorization && authorization.split(' ')[0] === 'Token') {
-    return authorization.split(' ')[1];
-  }
-  return null;
-};
+router.post('/signUp', function(req, res) {
+    const { login, password } = req.body;
 
-const auth = {
-  required: jwt({
-    secret: 'secret',
-    algorithms: ['HS256'],
-    userProperty: 'payload',
-    getToken: getTokenFromHeaders,
-  }),
-  optional: jwt({
-    secret: 'secret',
-    algorithms: ['HS256'],
-    userProperty: 'payload',
-    getToken: getTokenFromHeaders,
-    credentialsRequired: false,
-  }),
-};
+    if (login) {
+        const newUser = new User({
+            login: login,
+        });
 
-module.exports = auth;
+        newUser.setPassword(password);
+        newUser.save((error, document) => {
+            console.log(error);
+        });
+    }
+
+    res.redirect('/');
+});
+
+router.get('/signIn', function(req, res) {
+    res.render('signIn.html');
+});
+
+router.get('/signUp', function(req, res) {
+    res.render('signUp.html');
+});
+
+router.get('/logOut', function(req, res) {
+    req.logout();
+    res.redirect('/');
+})
+
+module.exports = router;

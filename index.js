@@ -1,5 +1,6 @@
 const Application = require('./app');
-require('./config/passport');
+require('./config/passport'); 
+
 const configureDb = require('./db');
 
 configureDb();

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>MY APP</title>
-</head>
-<body>
-  <h1> May Node and Express be with you. </h1>
-  <a href="/adminTest">test</a>
+{% extends "./common/parent.html" %}
+
+{% block content %}
+<h1> May Node and Express be with you. </h1>
+  <a href="/adminTest">adminTest</a>
   <br />
   {% for topic in topics %}
     <li><a href="/topics/{{topic.name}}">{{topic.name}}</a></li>
@@ -17,5 +13,4 @@
     <input type="text" placeholder="text" name="text">
     <button type="submit">Submit</button>
   </form>
-</body>
-</html>
+{% endblock %}
