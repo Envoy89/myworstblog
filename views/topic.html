@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>MY APP</title>
-</head>
-<body>
-    <p>{{topic.name}}</p>
-    <p>{{topic.text}}</p>
-</body>
-</html>
+{% extends "./common/parent.html" %}
+
+{% block content %}
+  <p>{{topic.name}}</p>
+  <p>{{topic.text}}</p>
+{% endblock %}
