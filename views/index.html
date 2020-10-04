@@ -1,11 +1,12 @@
 {% extends "./common/parent.html" %}
 
 {% block content %}
-<h1> May Node and Express be with you. </h1>
-  <a href="/adminTest">adminTest</a>
-  <br />
   {% for topic in topics %}
-    <li><a href="/topics/{{topic.name}}">{{topic.name}}</a></li>
+  <div class="section">
+    <h5><a href="/topics/{{topic.name}}">{{topic.name}}</a></h5>
+    <p>{{topic.fullText}}</p>
+    <div class="divider"></div>
+  </div>
   {% endfor %}
   <br />
   <form action="/topics" method="POST">

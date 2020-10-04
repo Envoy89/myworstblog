@@ -4,7 +4,7 @@
   "description": "Website for posting texts like blog",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --watch views --ext html index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ruzil",

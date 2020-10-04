@@ -3,15 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>MY APP</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <div>
-        Header
-        <a href="/auth/logOut">log out</a>
-    </div>
+    <nav>
+        <div class="nav-wrapper teal lighten-2">
+            <a href="#" class="brand-logo left">My worst blog</a>
+            <ul id="nav-mobile" class="right">
+              <li><a href="sass.html">Sass</a></li>
+              <li><a href="badges.html">Components</a></li>
+              <li><a href="collapsible.html">JavaScript</a></li>
+              <li><a href="/auth/logOut">log out</a></li>
+            </ul>
+          </div>
+    </nav>
 
-    {% block content %}{% endblock %}
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
 
-    <div>footer</div>
+    <footer class="teal lighten-2 page-footer"><div class="footer-copyright">
+        <div class="container">
+        © 2020 Ruzil
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
 </html>

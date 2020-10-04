@@ -4,7 +4,7 @@ const Topic = require('../models/Topic');
 router.post('/', (req, res) => {
     const newTopic = new Topic({
         name: req.body.name,
-        text: req.body.text
+        fullText: req.body.text
     });
 
     newTopic.save((error, document) => {
@@ -24,10 +24,10 @@ router.get('/:name', async (req, res) => {
 
 router.post('/:name', async (req, res) => {
     const topicName = req.params.name;
-    const topic = await topi.findOne({name: topicName});
+    const topic = await Topic.findOne({name: topicName});
 
-    topi.name = req.body.name;
-    topi.text = req.body.text;
+    topic.name = req.body.name;
+    topic.fullText = req.body.text;
 
     await topic.save();
 });
