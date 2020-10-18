@@ -1,6 +1,17 @@
 const passport = require('passport');
 const router = require('express').Router();
+const render = require('../utils/renderHtml');
 const User = require('../models/User');
+
+// auth/
+
+router.get('/signIn', function(req, res) {
+    render(req, res, 'signIn.html');
+});
+
+router.get('/signUp', function(req, res) {
+    render(req, res, 'signUp.html');
+});
 
 router.post('/signIn', passport.authenticate('local', {
     successRedirect: '/',
@@ -22,14 +33,6 @@ router.post('/signUp', function(req, res) {
     }
 
     res.redirect('/');
-});
-
-router.get('/signIn', function(req, res) {
-    res.render('signIn.html');
-});
-
-router.get('/signUp', function(req, res) {
-    res.render('signUp.html');
 });
 
 router.get('/logOut', function(req, res) {

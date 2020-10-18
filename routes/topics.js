@@ -1,10 +1,12 @@
 const router = require('express').Router();
+const isAuth = require('../middleware/auth');
+const render = require('../utils/renderHtml');
 const Topic = require('../models/Topic');
 
-router.post('/', (req, res) => {
+router.post('/', isAuth, (req, res) => {
     const newTopic = new Topic({
         name: req.body.name,
-        text: req.body.text
+        fullText: req.body.text
     });
 
     newTopic.save((error, document) => {
@@ -16,20 +18,31 @@ router.post('/', (req, res) => {
     res.redirect('/');
 });
 
-router.get('/:name', async (req, res) => {
-    const topicName = req.params.name;
-    const topic = await Topic.findOne({name: topicName});
-    res.render('topic.html', { topic: topic });
+router.get('/', isAuth, (req, res) => {
+    render(req, res, 'addNewTopic.html');
+})
+
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    const topic = await Topic.findById(id);
+    render(req, res, "topic.html", { topic } )
 });
 
-router.post('/:name', async (req, res) => {
-    const topicName = req.params.name;
-    const topic = await topi.findOne({name: topicName});
+router.post('/:id', isAuth, async (req, res) => {
+    const id = req.params.id;
+    const topic = await Topic.findById(id);
 
-    topi.name = req.body.name;
-    topi.text = req.body.text;
+    topic.name = req.body.name;
+    topic.fullText = req.body.text;
 
     await topic.save();
+});
+
+router.get('/delete/:id', isAuth, async (req, res) => {
+    const id = req.params.id;
+    await Topic.findByIdAndDelete(id);
+
+    res.redirect('/');
 });
 
 module.exports = router;

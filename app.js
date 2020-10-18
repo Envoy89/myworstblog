@@ -24,6 +24,8 @@ class Application {
         this.expressApp.use(passport.initialize());
         this.expressApp.use(passport.session());
         this.expressApp.use(router);
+
+        this.expressApp.use(express.static('public'));
     }
 }
 
