@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MY APP</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/main.css" />
+    <title>My worst blog</title>
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
     <nav>
         <div class="nav-wrapper teal lighten-2">
-            <a href="#" class="brand-logo left">My worst blog</a>
+            <a href="/" class="brand-logo left">My worst blog</a>
             <ul id="nav-mobile" class="right">
-              <li><a href="sass.html">Sass</a></li>
-              <li><a href="badges.html">Components</a></li>
-              <li><a href="collapsible.html">JavaScript</a></li>
-              <li><a href="/auth/logOut">log out</a></li>
+              {% if isAuth %}
+                <li><a href="/topics">Add new post</a></li>
+                <li><a href="/auth/logOut">log out</a></li>
+              {% else %}
+                <li><a href="/auth/signUp">Registration</a></li>
+                <li><a href="/auth/signIn">log in</a></li>
+              {% endif %}
             </ul>
           </div>
     </nav>
