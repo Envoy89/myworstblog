@@ -7,15 +7,15 @@ const userSchema = new Schema({
     login: {
         type: String,
         unique: true,
-        require: true
+        required: true
     },
     hash: {
         type: String,
-        require: true
+        required: true
     },
     salt: {
         type: String,
-        require: true
+        required: true
     }
 });
 
