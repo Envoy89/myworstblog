@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const dbHandler = require('./db-handler');
 const Topic = require('../../models/Topic');
 
-describe('Topic', function() {
+describe('Topic', () => {
     before(async () => await dbHandler.connect()); 
 
     afterEach(async () => await dbHandler.clearDatabase());
