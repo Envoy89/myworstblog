@@ -40,3 +40,12 @@ jobs:
           path: './VERSION'
           property: 'version'
           value: ${{ steps.bump_version.outputs.next-version }}
+
+      - name: Publish to pkalkman/mve-workflowengine on Docker Hub
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: envoy89/myworstblog
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: ./Dockerfile
+          tags: ${{ steps.bump_version.outputs.next-version }}
