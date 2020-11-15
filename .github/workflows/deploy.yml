@@ -29,3 +29,14 @@ jobs:
           version-fragment: 'bug'
       - name: New version
         run: echo ${{ steps.bump_version.outputs.next-version }}
+
+      - name: Remove existing version file
+        uses: JesseTG/rm@v1.0.2
+        with:
+          path: './VERSION'
+      - name: Write new version
+        uses: christian-draeger/write-properties@1.0.1
+        with:
+          path: './VERSION'
+          property: 'version'
+          value: ${{ steps.bump_version.outputs.next-version }}
