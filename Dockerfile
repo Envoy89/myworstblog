@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:14
 
 ARG APP_DIR=app
 RUN mkdir -p ${APP_DIR}
