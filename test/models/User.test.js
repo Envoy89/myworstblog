@@ -22,7 +22,7 @@ describe('User', () => {
 
         const findUser = await User.findOne({login}).exec();
 
-        expect(findUser).to.not.exist;
+        expect(findUser).to.exist;
         expect(findUser.login).to.equal(login);
         expect(findUser.validatePassword(password)).to.true;
     });
