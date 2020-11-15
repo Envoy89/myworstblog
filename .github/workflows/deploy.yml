@@ -53,5 +53,5 @@ jobs:
       - name: Git commit changes version number
         uses: matheusalbino/git-commit@v1.0.1
         with:
-          github-token: ${{ secrets.TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
