@@ -54,4 +54,4 @@ jobs:
         uses: matheusalbino/git-commit@v1.0.1
         with:
           github-token: ${{ secrets.TOKEN }}
-          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}
+          message: 'Updated version to ${{ steps.bump_version.outputs.next-version }}'
