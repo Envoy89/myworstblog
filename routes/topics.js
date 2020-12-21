@@ -3,6 +3,7 @@ const isAuth = require('../middleware/auth');
 const render = require('../utils/renderHtml');
 const Topic = require('../models/Topic');
 
+// todo remove all console.log, add loger, get error message from file
 router.post('/', isAuth, (req, res) => {
     const newTopic = new Topic({
         name: req.body.name,

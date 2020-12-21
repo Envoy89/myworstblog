@@ -14,8 +14,10 @@ class Application {
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(cookieParser());
+        // todo get secret from secret store
         this.expressApp.use(expressSessions({secret: 'SECRET'}));
 
+        // todo get nunjucks folder from config
         nunjucks.configure('views', {
             autoescape: true, 
             express: this.expressApp
@@ -25,6 +27,7 @@ class Application {
         this.expressApp.use(passport.session());
         this.expressApp.use(router);
 
+        // todo get static folder from config
         this.expressApp.use(express.static('public'));
     }
 }
