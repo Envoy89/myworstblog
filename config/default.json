@@ -4,5 +4,9 @@
     },
     "Server": {
         "port": 3000
+    },
+    "Folders": {
+        "static": "public",
+        "views": "views"
     }
 }
