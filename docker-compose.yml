@@ -3,7 +3,7 @@ services:
     api:
         image: envoy89/myworstblog:0.0.2
         ports:
-            - "3000:3000"
+            - "80:3000"
         depends_on:
             - db
         container_name: blog-api
