@@ -8,5 +8,10 @@
     "Folders": {
         "static": "public",
         "views": "views"
+    },
+    "Urls": {
+        "auth": {
+            "signIn": "/auth/signIn"
+        }
     }
 }

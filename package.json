@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -e js,html index.js",
-    "start": "node index.js",
+    "start": "cross-env DATABASE_URL=\"mongodb://blog-db:27017/blog\" PORT=3000 node index.js",
     "test": "mocha ./test/*"
   },
   "author": "Ruzil",
@@ -15,6 +15,7 @@
     "body-parser": "^1.19.0",
     "config": "^3.3.2",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
