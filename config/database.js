@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('config');
+const winston = require('./winston');
 
-// todo add user auth
-// todo get url from config or start parametrs
-const url = config.get('DataBase.url');
+const url = process.env.DATABASE_URL || config.get('DataBase.url');
 
 const configDataBase = () => {
 
@@ -13,13 +12,11 @@ const configDataBase = () => {
     const db = mongoose.connection
 
     db.once('open', _ => {
-        // todo remove console log, add log, get message from file
-        console.log('Database connected:', url);
+        winston.info(`Database connected: ${url}`);
     });
 
     db.on('error', err => {
-        // todo remove console log, add log, get message from file
-        console.error('connection error:', err);
+        winston.error(`connection error: ${err}`);
     });
 }
 

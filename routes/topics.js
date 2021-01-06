@@ -2,8 +2,10 @@ const router = require('express').Router();
 const isAuth = require('../middleware/auth');
 const render = require('../utils/renderHtml');
 const Topic = require('../models/Topic');
+const winston = require('../config/winston');
 
-// todo remove all console.log, add loger, get error message from file
+// topics/
+
 router.post('/', isAuth, (req, res) => {
     const newTopic = new Topic({
         name: req.body.name,
@@ -12,9 +14,9 @@ router.post('/', isAuth, (req, res) => {
 
     newTopic.save((error, document) => {
         if (error) {
-            console.log(error);
+            winston.error(error.message);
         }
-    })
+    });
 
     res.redirect('/');
 });
@@ -26,7 +28,7 @@ router.get('/', isAuth, (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const topic = await Topic.findById(id);
-    render(req, res, "topic.html", { topic } )
+    render(req, res, "topic.html", { topic } );
 });
 
 router.post('/:id', isAuth, async (req, res) => {
