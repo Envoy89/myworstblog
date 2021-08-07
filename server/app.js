@@ -22,16 +22,9 @@ class Application {
         // todo get secret from secret store
         this.expressApp.use(expressSessions({secret: 'SECRET'}));
 
-        nunjucks.configure(config.get('Folders.views'), {
-            autoescape: true, 
-            express: this.expressApp
-        });
-
         this.expressApp.use(passport.initialize());
         this.expressApp.use(passport.session());
         this.expressApp.use(router);
-
-        this.expressApp.use(express.static(config.get('Folders.static')));
     }
 }
 
