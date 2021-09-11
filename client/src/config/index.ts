@@ -21,8 +21,8 @@ interface IConfig {
 
 export enum Endpoints {
     GET_TOPICS = 'getTopics',
-    LOG_IN = 'logIn',
-    SIGN_UP = 'signUp'
+    LOG_IN = 'login',
+    REGISTER = 'register'
 }
 
 enum Method {
@@ -50,17 +50,17 @@ const config: IConfig = {
                     "Content-Type": 'application/json'
                 },
                 uri: {
-                    pathname: '/api/auth/logIn'
+                    pathname: '/api/auth/login'
                 }
             },
-            [Endpoints.SIGN_UP]: {
+            [Endpoints.REGISTER]: {
                 method: Method.POST,
                 headers: {
                     "Accept": 'application/json, text/plain, */*',
                     "Content-Type": 'application/json'
                 },
                 uri: {
-                    pathname: '/api/auth/signUp'
+                    pathname: '/api/auth/register'
                 }
             }
         }

@@ -1,6 +1,8 @@
 import { Endpoints } from "../config";
 import req from './request';
 
+const lockalStorageItemName = 'myworstblogtoken';
+
 interface IUser {
     login: string,
     password: string
@@ -18,8 +20,8 @@ export const logIn = async (login: string, password: string, callback?: () => vo
     useLogInOrSignUp(login, password, Endpoints.LOG_IN, callback);
 }
 
-export const signUp = async (login: string, password: string, callback?: () => void) => {
-    useLogInOrSignUp(login, password, Endpoints.SIGN_UP, callback);
+export const register = async (login: string, password: string, callback?: () => void) => {
+    useLogInOrSignUp(login, password, Endpoints.REGISTER, callback);
 }
 
 const useLogInOrSignUp = async (
@@ -34,9 +36,12 @@ const useLogInOrSignUp = async (
         }
         
         try {
-            const result = await req<IToken>(endpoint, undefined, query);
+            const result: IToken = await req<IToken>(endpoint, undefined, query);
 
-            console.log(result);
+            setToken(result.user.token);
+            if (callback) {
+                callback();
+            }
         } catch (e) {
             //setIsError(true);
             console.log(e);
@@ -44,6 +49,26 @@ const useLogInOrSignUp = async (
     }
 }
 
-export const isLogin = () => {
+const setToken = (token: string) => {
+    localStorage.setItem(lockalStorageItemName, token);
+}
+
+export const isAuthenticate = (): boolean => {
+    const token = localStorage.getItem(lockalStorageItemName);
+    if (token) {
+        return true;
+    }
     return false;
+}
+
+export const getToken = (): string => {
+    const token = localStorage.getItem(lockalStorageItemName);
+    if (token) {
+        return token;
+    }
+    return "";
+}
+
+export const logOut = () => {
+    localStorage.removeItem(lockalStorageItemName);
 }

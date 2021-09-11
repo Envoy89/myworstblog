@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { logIn, signUp } from '../../utils/auth';
+import { logIn, register } from '../../utils/auth';
 
 const Auth = () => {
     const [login, setLogin] = useState<string>("");

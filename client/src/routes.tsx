@@ -6,7 +6,8 @@ import Auth from './pages/Auth';
 
 export enum MyLinkEnum {
     HOME = '/',
-    LOG_IN = '/logIn',
+    LOG_IN = '/login',
+    LOG_OUT = '/logout',
     TOPICS = '/topics'
 }
 
