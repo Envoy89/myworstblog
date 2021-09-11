@@ -1,28 +1,19 @@
 const jwt = require('express-jwt');
 
-const getTokenFromHeaders = (req) => {
-  const { headers: { authorization } } = req;
-
-  if(authorization && authorization.split(' ')[0] === 'Token') {
-    return authorization.split(' ')[1];
-  }
-  return null;
-};
-
 // todo get secret from file
 const auth = {
   required: jwt({
-    secret: 'secret',
+    secret: 'secret2',
     userProperty: 'payload',
-    getToken: getTokenFromHeaders,
+    getToken: req => req.cookies.token,
     algorithms: ['sha1', 'RS256', 'HS256'],
   }),
   optional: jwt({
-    secret: 'secret',
+    secret: 'secret2',
     userProperty: 'payload',
-    getToken: getTokenFromHeaders,
+    getToken: req => req.cookies.token,
     credentialsRequired: false,
-    algorithms: ['RS256'],
+    algorithms: ['sha1', 'RS256', 'HS256'],
   }),
 };
 

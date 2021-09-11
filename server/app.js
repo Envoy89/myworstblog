@@ -7,6 +7,7 @@ const config = require('config');
 const expressSessions = require('express-session');
 const morgan = require('morgan');
 const winston = require('./config/winston');
+const cors = require('cors');
 
 const router = require('./routes');
 
@@ -16,6 +17,7 @@ class Application {
 
         this.expressApp.use(morgan('combined', { stream: winston.stream }));
 
+        this.expressApp.use(cors())
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(cookieParser());

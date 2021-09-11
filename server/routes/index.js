@@ -1,6 +1,10 @@
 const router = require('express').Router();
 
-router.use('/topics', require('./api/topics'));
-router.use('/auth', require('./api/auth'));
+router.get('/ping', (req, res) => {
+    res.status(200).send({message: 'Successfule ping'});
+})
+
+router.use('/api/topics', require('./api/topics'));
+router.use('/api/auth', require('./api/auth'));
 
 module.exports = router;

@@ -7,6 +7,7 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     login: {
         type: String,
+        index: true,
         unique: true,
         required: true
     },
@@ -39,8 +40,8 @@ userSchema.methods.generateJWT = function() {
     return jwt.sign({
       login: this.login,
       id: this._id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10),
-    }, 'secret');
+      exp: parseInt(expirationDate.getTime(), 10),
+    }, 'secret2');
   }
 
 userSchema.methods.toAuthJSON = function() {

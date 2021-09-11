@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRoutes } from 'hookrouter';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import routes from './routes';
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
         <div>
             <Header />
             { match }
+            <Footer />
         </div>
     )
 }
