@@ -2,7 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import { logIn, register } from '../../utils/auth';
 
-const Auth = () => {
+interface AuthProps {
+    isRegister: boolean
+}
+
+const Auth: React.FC<AuthProps> = ({ isRegister }) => {
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -16,6 +20,10 @@ const Auth = () => {
 
     const internalLogIn = async () => {
         await logIn(login, password);
+    }
+
+    const internalRegister = async () => {
+        await register(login, password);
     }
 
     return <div>
@@ -35,9 +43,9 @@ const Auth = () => {
             className="btn waves-effect waves-light" 
             type="submit" 
             name="action"
-            onClick={internalLogIn}
+            onClick={isRegister ? internalRegister : internalLogIn}
         >
-                Submit
+                {isRegister ? "Зарегистрироваться" : "Войти"}
         </button>
     </div>
 }

@@ -16,16 +16,34 @@ interface IToken {
     }
 }
 
-export const logIn = async (login: string, password: string, callback?: () => void) => {
-    useLogInOrSignUp(login, password, Endpoints.LOG_IN, callback);
+export const logIn = async (
+    login: string, 
+    password: string, 
+    successCallback?: () => void,
+    errorCallback?: () => void
+) => {
+    await useLogInOrSignUp(
+        login, password, Endpoints.LOG_IN, successCallback, errorCallback
+    );
 }
 
-export const register = async (login: string, password: string, callback?: () => void) => {
-    useLogInOrSignUp(login, password, Endpoints.REGISTER, callback);
+export const register = async (
+    login: string, 
+    password: string,
+    successCallback?: () => void,
+    errorCallback?: () => void
+) => {
+    await useLogInOrSignUp(
+        login, password, Endpoints.REGISTER, successCallback, errorCallback
+    );
 }
 
 const useLogInOrSignUp = async (
-    login: string, password: string, endpoint: Endpoints, callback?: () => void
+    login: string, 
+    password: string, 
+    endpoint: Endpoints, 
+    successCallback?: () => void,
+    errorCallback?: () => void
 ) => {
     if (login === "" || password === "") {
         return;
@@ -39,12 +57,13 @@ const useLogInOrSignUp = async (
             const result: IToken = await req<IToken>(endpoint, undefined, query);
 
             setToken(result.user.token);
-            if (callback) {
-                callback();
+            if (successCallback) {
+                successCallback();
             }
         } catch (e) {
-            //setIsError(true);
-            console.log(e);
+            if (errorCallback) {
+                errorCallback();
+            }
         }
     }
 }
