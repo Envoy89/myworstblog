@@ -1,9 +1,11 @@
 import React from 'react';
+import { MyLinkEnum } from '../../routes';
+import { navigate } from 'hookrouter';
 import { useState } from 'react';
 import { logIn, register } from '../../utils/auth';
 
 interface AuthProps {
-    isRegister: boolean
+    isRegister ?: boolean
 }
 
 const Auth: React.FC<AuthProps> = ({ isRegister }) => {
@@ -18,12 +20,13 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         setPassword(e.target.value);
     }
 
-    const internalLogIn = async () => {
-        await logIn(login, password);
-    }
-
-    const internalRegister = async () => {
-        await register(login, password);
+    const handleButton = async () => {
+        if (isRegister) {
+            await register(login, password);
+        } else {
+            await logIn(login, password);
+        }
+        navigate(MyLinkEnum.HOME);
     }
 
     return <div>
@@ -43,7 +46,7 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
             className="btn waves-effect waves-light" 
             type="submit" 
             name="action"
-            onClick={isRegister ? internalRegister : internalLogIn}
+            onClick={handleButton}
         >
                 {isRegister ? "Зарегистрироваться" : "Войти"}
         </button>

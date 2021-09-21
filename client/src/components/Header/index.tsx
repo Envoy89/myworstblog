@@ -1,10 +1,11 @@
 import React from 'react';
+import { MyLinkEnum } from '../../routes';
 import { isAuthenticate, logOut } from '../../utils/auth';
 
 const Header = () => {
     const isAuth = isAuthenticate();
 
-    const topics = isAuth ? <li><a href="/topics">Add new post</a></li> : null;
+    const topics = isAuth ? <li><a href={MyLinkEnum.TOPIC_CREATE}>Add new post</a></li> : null;
     const loginOrLogout = isAuth ? <li><a onClick={logOut}>Log out</a></li> : 
         <li><a href="/login">Log In</a></li>
 

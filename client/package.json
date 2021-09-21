@@ -8,9 +8,8 @@
   "author": "Ruzil",
   "license": "ISC",
   "dependencies": {
-    "@types/hookrouter": "^2.2.5",
-    "@types/react-router-dom": "^5.1.7",
-    "hookrouter": "^1.2.5",
+    "@types/hookrouter": "2.2.3",
+    "hookrouter": "1.2.3",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

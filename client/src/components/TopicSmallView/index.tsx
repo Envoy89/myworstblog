@@ -1,4 +1,5 @@
 import React from 'react';
+import {A} from 'hookrouter';
 import { isAuthenticate } from '../../utils/auth';
 
 interface TopicProps {
@@ -21,7 +22,7 @@ const TopicSmallView: React.FC<TopicProps> = ({
 
     return <div className="row">
         <div className={topicNameClass}>
-            <h5><a href={"/topics/${_id}"}>{name}</a></h5>
+            <h5><A href={`/topic/${_id}`}>{name}</A></h5>
         </div>
         {authUserButtons}
     <div className="col s12">

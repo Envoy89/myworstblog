@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import HomePage from './pages/Home';
-import TopicsPage from './pages/Topics';
-import TopicPage from './pages/Topic';
+import TopicPage, { TopicPageProps } from './pages/Topic';
+import Topic, { TopicProps, TopicPageType } from './components/Topic';
 import Auth from './pages/Auth';
 
 export enum MyLinkEnum {
     HOME = '/',
     LOG_IN = '/login',
     LOG_OUT = '/logout',
-    TOPICS = '/topics'
+    TOPIC_CREATE = '/createTopic',
+    TOPIC_VIEW = '/topic/:id',
+    TOPIC_CHANGE = '/changeTopic/:id',
 }
 
 interface RoutesInt {
-    [link: string]: () => JSX.Element;
+    [link: string]: (props: PropsWithChildren<any>) => JSX.Element;
 }
 
 const routes: RoutesInt = {
     [MyLinkEnum.HOME]: () => <HomePage />,
-    [MyLinkEnum.TOPICS]: () => <TopicsPage />,
-    [MyLinkEnum.LOG_IN]: () => <Auth />
+    [MyLinkEnum.LOG_IN]: () => <Auth />,
+    [MyLinkEnum.TOPIC_VIEW]: ({ id }: TopicPageProps) => <TopicPage id={id} />,
+    [MyLinkEnum.TOPIC_CREATE]: () => <Topic type={TopicPageType.CREATE} />,
 }
 
 export default routes;

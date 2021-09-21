@@ -21,6 +21,7 @@ interface IConfig {
 
 export enum Endpoints {
     GET_TOPICS = 'getTopics',
+    GET_TOPIC = 'getTopic',
     LOG_IN = 'login',
     REGISTER = 'register'
 }
@@ -61,6 +62,12 @@ const config: IConfig = {
                 },
                 uri: {
                     pathname: '/api/auth/register'
+                }
+            },
+            [Endpoints.GET_TOPIC]: {
+                method: Method.GET,
+                uri: {
+                    pathname: '/api/topics/{id}'
                 }
             }
         }
