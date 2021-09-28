@@ -9,7 +9,10 @@ async function req<T>(endpoint: Endpoints, query?: object, body?: object): Promi
   
   const data = getFetchData(endpoint, body);
 
-  return fetch(uri, data).then((res) => res.json());
+  return fetch(uri, {
+    credentials: 'include',
+    ...data
+  }).then((res) => res.json());
 }
 
 export default req;

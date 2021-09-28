@@ -10,7 +10,6 @@ passport.use(new LocalStrategy({
 }, (login, password, done) => {
     User.findOne({login})
         .then((user) => {
-            console.log(user.validatePassword(password));
             if (!user || !user.validatePassword(password)) {
                 winston.debug('Incorrect login or password.');
                 return done(null, false, { message: 'Incorrect login or password.' });
@@ -26,12 +25,10 @@ passport.use(new LocalStrategy({
 
 // todo get secret from file
 passport.use(new JwtStrategy({
-        jwtFromRequest: req => req.cookies.jwt,
+        jwtFromRequest: req => req.cookies.token,
         secretOrKey: 'secret2',
     },
     (jwtPayload, done) => {
-        console.log(Date.now());
-        console.log(jwtPayload.exp)
         if (Date.now() > jwtPayload.exp) {
             return done('jwt expired');
         }

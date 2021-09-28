@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     const newTopic = new Topic({
         name: req.body.name,
-        fullText: req.body.text
+        fullText: req.body.fullText
     });
 
     newTopic.save((error, document) => {

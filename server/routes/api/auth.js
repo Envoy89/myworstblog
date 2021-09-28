@@ -7,16 +7,14 @@ const User = require('../../models/User');
 router.post('/login', (req, res, next) => {
     return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
         if(err || !passportUser) {
-            res.status(400).json(info);
+            return res.status(400).json(info);
         }
 
         const user = passportUser;
         user.token = passportUser.generateJWT();
 
-        res.cookie('token', user.token, { httpOnly: true, secure: true  });
-        res.status(200).json({ user: user.toAuthJSON() });
-        
-        return res.sendStatus(400).info;
+        res.cookie('token', user.token, { httpOnly: true });
+        return res.status(200).json({ user: user.toAuthJSON() });
       })(req, res, next);
 });
 

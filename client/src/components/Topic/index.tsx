@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Endpoints } from "../../config";
+import req from '../../utils/request';
 import ITopic from '../../interface/ITopic';
+import { navigate } from 'hookrouter';
+import { MyLinkEnum } from '../../routes';
 
 export enum TopicPageType {
     CREATE,
@@ -39,8 +43,13 @@ const Topic: React.FC<TopicProps> = ({
 
     const readOnly = type == TopicPageType.VIEW;
 
-    const handleCreate = () => {
-
+    const handleCreate = async () => {
+        const topic: ITopic = {
+            name,
+            fullText
+        }
+        const result: ITopic = await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
+        navigate(MyLinkEnum.HOME);
     }
 
     const handleEdit = () => {

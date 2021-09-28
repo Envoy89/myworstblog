@@ -6,7 +6,8 @@ import { Endpoints } from '../config';
 //todo fix object type
 //todo fix any type
 const useData = <T>(
-  endpoint: Endpoints, query: object, deps: any[] = [] ) => {
+  endpoint: Endpoints, query: object, deps: any[] = [] 
+) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);

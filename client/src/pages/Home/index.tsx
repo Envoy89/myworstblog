@@ -10,7 +10,7 @@ interface ITopicQuery {
 
 const Home = () => {
     const query: ITopicQuery = {
-        limit: 2
+        limit: 200
     }
     const { data, isLoading, isError } = 
         useData<ITopic[]>(Endpoints.GET_TOPICS, query, []);

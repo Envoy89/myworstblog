@@ -22,6 +22,7 @@ interface IConfig {
 export enum Endpoints {
     GET_TOPICS = 'getTopics',
     GET_TOPIC = 'getTopic',
+    CREATE_TOPIC = 'createTopic',
     LOG_IN = 'login',
     REGISTER = 'register'
 }
@@ -35,7 +36,7 @@ const config: IConfig = {
     client: {
         server: {
             protocol: 'http',
-            host: 'localhost:3000'
+            host: 'localhost:3001'
         },
         endpoint: {
             [Endpoints.GET_TOPICS]: {
@@ -47,7 +48,7 @@ const config: IConfig = {
             [Endpoints.LOG_IN]: {
                 method: Method.POST,
                 headers: {
-                    "Accept": 'application/json, text/plain, */*',
+                    "Accept": 'application/json',
                     "Content-Type": 'application/json'
                 },
                 uri: {
@@ -62,6 +63,16 @@ const config: IConfig = {
                 },
                 uri: {
                     pathname: '/api/auth/register'
+                }
+            },
+            [Endpoints.CREATE_TOPIC]: {
+                method: Method.POST,
+                headers: {
+                    "Accept": 'application/json, text/plain, */*',
+                    "Content-Type": 'application/json'
+                },
+                uri: {
+                    pathname: '/api/topics'
                 }
             },
             [Endpoints.GET_TOPIC]: {
