@@ -18,8 +18,8 @@ class Application {
         this.expressApp.use(morgan('combined', { stream: winston.stream }));
 
         this.expressApp.use(cors())
-        this.expressApp.use(bodyParser.urlencoded({ extended: false }));
-        this.expressApp.use(bodyParser.json());
+        this.expressApp.use(express.urlencoded({ extended: false }));
+        this.expressApp.use(express.json());
         this.expressApp.use(cookieParser());
         // todo get secret from secret store
         this.expressApp.use(expressSessions({secret: 'SECRET'}));
