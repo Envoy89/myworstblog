@@ -1,4 +1,6 @@
 import { Endpoints } from "../config";
+import { navigate } from 'hookrouter';
+import { MyLinkEnum } from '../routes';
 import req from './request';
 
 const lockalStorageItemName = 'myworstblogtoken';
@@ -56,9 +58,15 @@ const useLogInOrSignUp = async (
         try {
             const result: IToken = await req<IToken>(endpoint, undefined, query);
 
-            setToken(result.user.token);
-            if (successCallback) {
-                successCallback();
+            if (result.user) {
+                setToken(result.user.token);
+                if (successCallback) {
+                    successCallback();
+                }
+            } else {
+                if (errorCallback) {
+                    errorCallback();
+                }
             }
         } catch (e) {
             if (errorCallback) {
@@ -91,4 +99,6 @@ export const getToken = (): string => {
 export const logOut = async () => {
     await req(Endpoints.LOG_OUT, undefined, undefined);
     localStorage.removeItem(lockalStorageItemName);
+    navigate(MyLinkEnum.HOME);
+    document.location.reload();
 }

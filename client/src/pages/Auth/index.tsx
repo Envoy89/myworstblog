@@ -20,13 +20,16 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         setPassword(e.target.value);
     }
 
+    const alertError = () => {
+        alert("Error");
+    }
+
     const handleButton = async () => {
         if (isRegister) {
-            await register(login, password);
+            await register(login, password, () => navigate(MyLinkEnum.HOME), alertError);
         } else {
-            await logIn(login, password);
+            await logIn(login, password, () => navigate(MyLinkEnum.HOME), alertError);
         }
-        navigate(MyLinkEnum.HOME);
     }
 
     return <div>
