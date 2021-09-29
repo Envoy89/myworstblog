@@ -1,0 +1,39 @@
+{
+  "name": "myworstblog",
+  "version": "1.0.0",
+  "description": "Website for posting texts like blog",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -e js,html index.js",
+    "copy-static-files": "copyfiles -f ../client/dist/*.html ../client/dist/*.js public",
+    "copy-css-static-files": "copyfiles -f ../client/dist/css/*.css public/css",
+    "start": "cross-env DATABASE_URL=\"mongodb://blog-db:27017/blog\" PORT=3000 node index.js",
+    "test": "mocha ./test/*"
+  },
+  "author": "Ruzil",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "config": "^3.3.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.12.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.5",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "copyfiles": "^2.4.1",
+    "mocha": "^8.2.0",
+    "mongodb-memory-server": "^6.9.2",
+    "nodemon": "^2.0.4"
+  }
+}

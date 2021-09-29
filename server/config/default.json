@@ -1,0 +1,21 @@
+{
+    "DataBase": {
+        "url": "mongodb://127.0.0.1:27017/blog"
+    },
+    "Server": {
+        "port": 3000
+    },
+    "Folders": {
+        "static": "public"
+    },
+    "Urls": {
+        "auth": {
+            "signIn": "/auth/signIn"
+        }
+    },
+    "JwtTokenName": "myworstblogtoken",
+    "Secrets": {
+        "jwtSecret": "secret2",
+        "expressSessionSecret": "SECRET"
+    }
+}

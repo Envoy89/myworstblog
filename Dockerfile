@@ -1,13 +1,24 @@
-FROM node:14
+FROM node:14 AS buildClient
 
-ARG APP_DIR=app
-RUN mkdir -p ${APP_DIR}
-WORKDIR ${APP_DIR}
+RUN mkdir -p app
+WORKDIR /app
 
-COPY package*.json ./
+COPY ./client/package*.json ./
 RUN npm install
 
-COPY . .
+COPY ./client .
+RUN npm run build:prod
+
+FROM node:14
+
+RUN mkdir -p app
+WORKDIR /app
+
+COPY ./server/package*.json ./
+RUN npm install
+
+COPY ./server .
+COPY --from=buildClient /app/dist /app/public
 
 EXPOSE 3000
 
