@@ -14,5 +14,9 @@
             "signIn": "/auth/signIn"
         }
     },
-    "JwtTokenName": "myworstblogtoken"
+    "JwtTokenName": "myworstblogtoken",
+    "Secrets": {
+        "jwtSecret": "secret2",
+        "expressSessionSecret": "SECRET"
+    }
 }

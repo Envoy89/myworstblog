@@ -24,10 +24,9 @@ passport.use(new LocalStrategy({
         });
 }));
 
-// todo get secret from file
 passport.use(new JwtStrategy({
         jwtFromRequest: req => req.cookies[config.get('JwtTokenName')],
-        secretOrKey: 'secret2',
+        secretOrKey: config.get('Secrets.jwtSecret'),
     },
     (jwtPayload, done) => {
         if (Date.now() > jwtPayload.exp) {
