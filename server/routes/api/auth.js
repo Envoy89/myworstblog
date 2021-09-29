@@ -1,5 +1,6 @@
 const passport = require('passport');
-const winston = require('./winston');
+const { body, validationResult } = require('express-validator');
+const winston = require('../../config/winston');
 const config = require('config');
 const router = require('express').Router();
 const User = require('../../models/User');
@@ -20,23 +21,36 @@ router.post('/login', (req, res, next) => {
       })(req, res, next);
 });
 
-// todo check input
-router.post('/register', function(req, res) {
-    const { login, password } = req.body;
+router.post(
+    '/register', 
+    body('login').notEmpty(),
+    body('password').notEmpty().isLength({ min: 5 }),
+    async function(req, res) {
+        const errors = validationResult(req);
 
-    if (login && password) {
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() });
+        }
+
+        const { login, password } = req.body;
+
+        const existUser = await User.findOne({login});
+        if (existUser) {
+            return res.status(400).json({ message: "User exist"});
+        }
+        
         const newUser = new User({
             login: login,
         });
 
         newUser.setPassword(password);
-        newUser.save((error) => {
+        await newUser.save((error) => {
             winston.error(error);
-            return res.sendStatus(500);
+            return res.status(500).json({ message: 'Something wrong.' });
         });
-    }
+        
 
-    return res.sendStatus(200);
+        return res.sendStatus(200);
 });
 
 router.get('/logOut', function(req, res) {
