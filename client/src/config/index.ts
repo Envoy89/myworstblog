@@ -24,7 +24,8 @@ export enum Endpoints {
     GET_TOPIC = 'getTopic',
     CREATE_TOPIC = 'createTopic',
     LOG_IN = 'login',
-    REGISTER = 'register'
+    REGISTER = 'register',
+    LOG_OUT = 'logOut',
 }
 
 enum Method {
@@ -63,6 +64,12 @@ const config: IConfig = {
                 },
                 uri: {
                     pathname: '/api/auth/register'
+                }
+            },
+            [Endpoints.LOG_OUT]: {
+                method: Method.GET,
+                uri: {
+                    pathname: '/api/auth/logOut'
                 }
             },
             [Endpoints.CREATE_TOPIC]: {

@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local');
 const winston = require('./winston');
 const JwtStrategy = require('passport-jwt').Strategy;
 const User = require('../models/User');
+const config = require('config');
 
 passport.use(new LocalStrategy({
     usernameField: 'login',
@@ -25,7 +26,7 @@ passport.use(new LocalStrategy({
 
 // todo get secret from file
 passport.use(new JwtStrategy({
-        jwtFromRequest: req => req.cookies.token,
+        jwtFromRequest: req => req.cookies[config.get('JwtTokenName')],
         secretOrKey: 'secret2',
     },
     (jwtPayload, done) => {

@@ -13,5 +13,6 @@
         "auth": {
             "signIn": "/auth/signIn"
         }
-    }
+    },
+    "JwtTokenName": "myworstblogtoken"
 }

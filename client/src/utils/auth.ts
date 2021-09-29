@@ -88,6 +88,7 @@ export const getToken = (): string => {
     return "";
 }
 
-export const logOut = () => {
+export const logOut = async () => {
+    await req(Endpoints.LOG_OUT, undefined, undefined);
     localStorage.removeItem(lockalStorageItemName);
 }
