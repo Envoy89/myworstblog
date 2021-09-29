@@ -37,7 +37,7 @@ const config: IConfig = {
     client: {
         server: {
             protocol: 'http',
-            host: 'localhost:3001'
+            host: location.hostname + ':' + location.port
         },
         endpoint: {
             [Endpoints.GET_TOPICS]: {

@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -e js,html index.js",
+    "copy-static-files": "copyfiles -f ../client/dist/*.html ../client/dist/*.js public",
+    "copy-css-static-files": "copyfiles -f ../client/dist/css/*.css public/css",
     "start": "cross-env DATABASE_URL=\"mongodb://blog-db:27017/blog\" PORT=3000 node index.js",
     "test": "mocha ./test/*"
   },
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "copyfiles": "^2.4.1",
     "mocha": "^8.2.0",
     "mongodb-memory-server": "^6.9.2",
     "nodemon": "^2.0.4"
