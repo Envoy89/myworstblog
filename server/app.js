@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const winston = require('./config/winston');
 const cors = require('cors');
 const config = require('config');
+const { stringReplace } = require('string-replace-middleware');
 
 const router = require('./routes');
 
@@ -25,7 +26,18 @@ class Application {
         this.expressApp.use(passport.session());
         this.expressApp.use(router);
 
+        addBaseUrlFromEnv(this.expressApp);
         this.expressApp.use(express.static(config.get('Folders.static')));
+    }
+}
+
+const addBaseUrlFromEnv = (app) => {
+    const baseHtmlUrl = process.env.BaseHtmlUrl;
+    console.log(baseHtmlUrl);
+    if (baseHtmlUrl) {
+        app.use(stringReplace({
+            '<base href=\"/\"': `<base href=\"${baseHtmlUrl}\"`,
+        }));
     }
 }
 
