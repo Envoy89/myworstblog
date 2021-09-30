@@ -14,7 +14,7 @@ interface ITopicQuery {
 
 const TopicPage: React.FC<TopicPageProps> = ({id}) => {
     const query = {
-        id: id 
+        id
     }
 
     const { data, isLoading, isError } = 

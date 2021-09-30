@@ -49,6 +49,7 @@ const Topic: React.FC<TopicProps> = ({
             fullText
         }
         const result: ITopic = await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
+        
         navigate(MyLinkEnum.HOME);
     }
 

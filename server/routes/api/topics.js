@@ -2,40 +2,75 @@ const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
 const winston = require('../../config/winston');
+const { query, body, param, validationResult } = require('express-validator');
 
-// todo add checks
-router.get('/', async (req, res) => {
-    const { limit: limitString } = req.query;
-    const limit = (+limitString) || 10;
-    console.log(limit);
-    const topics = await Topic.find().limit(limit);
+router.get(
+    '/', 
+    query('limit').exists().notEmpty(),
+    async (req, res) => {
 
-    return res.json(topics);
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() });
+        }
+
+        const { limit: limitString } = req.query;
+        const limit = (+limitString) || 10;
+        
+        const topics = await Topic.find().limit(limit);
+
+        return res.json(topics);
 });
 
 // topics/
-// todo check
-router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    const newTopic = new Topic({
-        name: req.body.name,
-        fullText: req.body.fullText
-    });
+router.post(
+    '/', 
+    passport.authenticate('jwt', {session: false}), 
+    body('name').notEmpty(),
+    body('fullText').notEmpty(),
+    (req, res) => {
 
-    newTopic.save((error, document) => {
-        if (error) {
-            winston.error(error.message);
-            return res.sendStatus(500);
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() });
         }
-    });
+        
+        const newTopic = new Topic({
+            name: req.body.name,
+            fullText: req.body.fullText
+        });
 
-    return res.json(newTopic);
+        newTopic.save((error, document) => {
+            if (error) {
+                winston.error(error.message);
+                return res.status(500);
+            }
+        });
+
+        return res.json(newTopic);
 });
 
-// todo check
-router.get('/:id', async (req, res) => {
-    const id = req.params.id;
-    const topic = await Topic.findById(id);
-    return res.json(topic);
+router.get(
+    '/:id',
+    param('id').notEmpty(),
+    async (req, res) => {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() });
+        }
+
+        const id = req.params.id;
+        try {
+            const topic = await Topic.findById(id);
+            return res.json(topic);
+        } catch (e) {
+            winston.error(e.message);
+            return res.status(400).json({ message: 'Something wrong' });
+        }
 });
 
 // todo check
@@ -51,11 +86,27 @@ router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, 
 });
 
 // todo check
-router.get('/delete/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
-    const id = req.params.id;
-    await Topic.findByIdAndDelete(id);
+router.delete(
+    '/:id', 
+    passport.authenticate('jwt', {session: false}), 
+    param('id').notEmpty(),
+    async (req, res) => {
 
-    return res.sendStatus(200);
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() });
+        }
+
+        const id = req.params.id;
+
+        try {
+            await Topic.findByIdAndDelete(id);
+            return res.status(200).json({ message: 'Success delete' });
+        } catch(e) {
+            winston.error(e.message);
+            return res.status(400).json({ message: 'Something wrong' });
+        }
 });
 
 module.exports = router;

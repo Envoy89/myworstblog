@@ -1,25 +1,49 @@
 import React from 'react';
-import {A} from 'hookrouter';
+import { A, navigate } from 'hookrouter';
+import req from '../../utils/request';
+import { Endpoints } from '../../config';
 import { isAuthenticate } from '../../utils/auth';
+import { MyLinkEnum } from '../../routes';
 
 interface TopicProps {
     _id: number,
     name: String,
-    fullText: String
+    fullText: String,
+    needUpdateAllTipics: boolean,
+    setNeedUpdateAllTopics: (value: boolean) => void
 }
 
 const TopicSmallView: React.FC<TopicProps> = ({
-    _id, name, fullText
+    _id, name, fullText, needUpdateAllTipics, setNeedUpdateAllTopics
 }) => {
     const topicNameClass = "col s8"
 
     const isAuth = isAuthenticate();
 
+    const removeTopic = async () => {
+        const query = {
+            id: _id 
+        }
+
+        await req(Endpoints.DELETE_TOPIC, query);
+        
+        setNeedUpdateAllTopics(!needUpdateAllTipics);
+    }
+
     const authUserButtons = isAuth ? <div className="col s4 topicControlButton">
-        <button className="btn waves-effect waves-light" type="submit" name="action">
+        <button 
+            className="btn waves-effect waves-light" 
+            type="submit" 
+            name="action" 
+        >
             Edit
         </button>
-        <button className="waves-effect waves-light btn" type="submit" name="action">
+        <button 
+            className="waves-effect waves-light btn" 
+            type="submit" 
+            name="action"
+            onClick={removeTopic}
+        >
             Remove
         </button>
     </div> : null;

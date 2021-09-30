@@ -23,6 +23,7 @@ export enum Endpoints {
     GET_TOPICS = 'getTopics',
     GET_TOPIC = 'getTopic',
     CREATE_TOPIC = 'createTopic',
+    DELETE_TOPIC = 'deleteTopic',
     LOG_IN = 'login',
     REGISTER = 'register',
     LOG_OUT = 'logOut',
@@ -30,7 +31,8 @@ export enum Endpoints {
 
 enum Method {
     GET = 'GET',
-    POST = 'POST'
+    POST = 'POST',
+    DELETE = 'DELETE',
 }
 
 const config: IConfig = {
@@ -84,6 +86,12 @@ const config: IConfig = {
             },
             [Endpoints.GET_TOPIC]: {
                 method: Method.GET,
+                uri: {
+                    pathname: '/api/topics/{id}'
+                }
+            },
+            [Endpoints.DELETE_TOPIC]: {
+                method: Method.DELETE,
                 uri: {
                     pathname: '/api/topics/{id}'
                 }
