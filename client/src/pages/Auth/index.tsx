@@ -20,8 +20,8 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         setPassword(e.target.value);
     }
 
-    const alertError = () => {
-        alert("Error");
+    const alertError = (e: any) => {
+        alert(e);
     }
 
     const handleButton = async () => {

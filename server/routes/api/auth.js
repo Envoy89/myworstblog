@@ -10,7 +10,7 @@ router.post('/login', (req, res, next) => {
     return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
         if(err || !passportUser) {
             winston.error(info);
-            return res.status(400).json(info);
+            return res.status(400).send(info);
         }
 
         const user = passportUser;
@@ -29,7 +29,7 @@ router.post(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array() });
+            return res.status(400).statusMessage(errors.array());
         }
 
         const { login, password } = req.body;

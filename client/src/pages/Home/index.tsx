@@ -7,13 +7,11 @@ import IQuery from '../../interface/IQuery';
 import ITopic from '../../interface/ITopic';
 
 const Home = () => {
-    const [needUpdate, setNeedUpdate] = useState<boolean>(true);
-
     const query: IQuery = {
         limit: 20
     }
     const { data, isLoading, isError } = 
-        useData<ITopic[]>(Endpoints.GET_TOPICS, query, [needUpdate]);
+        useData<ITopic[]>(Endpoints.GET_TOPICS, query, []);
 
     if (isLoading) {
         return <Loader />
@@ -29,12 +27,6 @@ const Home = () => {
                         _id = {val._id || 1}
                         name={val.name}
                         fullText={val.fullText}
-                        needUpdateAllTipics={needUpdate}
-                        setNeedUpdateAllTopics={
-                            (value: boolean) => {
-                                setNeedUpdate(value);
-                            }
-                        }
                     />
                 })
             }

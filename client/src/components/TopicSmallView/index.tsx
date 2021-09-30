@@ -4,30 +4,34 @@ import req from '../../utils/request';
 import { Endpoints } from '../../config';
 import { isAuthenticate } from '../../utils/auth';
 import { MyLinkEnum } from '../../routes';
+import IQuery from '../../interface/IQuery';
 
 interface TopicProps {
     _id: number,
     name: String,
     fullText: String,
-    needUpdateAllTipics: boolean,
-    setNeedUpdateAllTopics: (value: boolean) => void
 }
 
 const TopicSmallView: React.FC<TopicProps> = ({
-    _id, name, fullText, needUpdateAllTipics, setNeedUpdateAllTopics
+    _id, name, fullText
 }) => {
-    const topicNameClass = "col s8"
+    const topicNameClass: string = "col s8"
 
     const isAuth = isAuthenticate();
 
     const removeTopic = async () => {
-        const query = {
+        const query: IQuery = {
             id: _id 
         }
-
-        await req(Endpoints.DELETE_TOPIC, query);
         
-        setNeedUpdateAllTopics(!needUpdateAllTipics);
+        try {
+            await req(Endpoints.DELETE_TOPIC, query);
+            
+            navigate(MyLinkEnum.HOME);
+            document.location.reload();
+        } catch(e) {
+            alert(e);
+        }
     }
 
     const authUserButtons = isAuth ? <div className="col s4 topicControlButton">

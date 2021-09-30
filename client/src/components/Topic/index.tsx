@@ -48,9 +48,14 @@ const Topic: React.FC<TopicProps> = ({
             name,
             fullText
         }
-        const result: ITopic = await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
+
+        try {
+            const result: ITopic = await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
         
-        navigate(MyLinkEnum.HOME);
+            navigate(MyLinkEnum.HOME);
+        } catch(e) {
+            alert(e);
+        }
     }
 
     const handleEdit = () => {
