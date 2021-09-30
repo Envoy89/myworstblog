@@ -15,9 +15,13 @@ const TopicSmallView: React.FC<TopicProps> = ({
 
     const isAuth = isAuthenticate();
 
-    const authUserButtons = isAuth ? <div className="col s4">
-        <button className="btn waves-effect waves-light" type="submit" name="action">Edit</button>
-        <a className="waves-effect waves-light btn" href="/topics/delete/{{topic._id}}">Remove</a>
+    const authUserButtons = isAuth ? <div className="col s4 topicControlButton">
+        <button className="btn waves-effect waves-light" type="submit" name="action">
+            Edit
+        </button>
+        <button className="waves-effect waves-light btn" type="submit" name="action">
+            Remove
+        </button>
     </div> : null;
 
     return <div className="row">

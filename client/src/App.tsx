@@ -5,18 +5,21 @@ import Footer from './components/Footer';
 import routes from './routes';
 
 var base = document.getElementsByTagName('base')[0].getAttribute("href");
-if (base) {
+console.log(base);
+if (base && base !== '/') {
     setBasepath(base);
 }
 
 const App = () => {
     const match = useRoutes(routes);
     return (
-        <div>
+        <>
             <Header />
+            <div className="mainContainer">
             { match }
+            </div>
             <Footer />
-        </div>
+        </>
     )
 }
 

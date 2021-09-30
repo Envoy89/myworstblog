@@ -66,10 +66,18 @@ const Topic: React.FC<TopicProps> = ({
     </button>;
 
     return (
-        <div>
-            <div>Topic!!!</div>
-            <textarea onChange={handleChangeName} disabled={readOnly} value={name}></textarea>
-            <textarea onChange={handleChangeFullText} disabled={readOnly} value={fullText}></textarea>
+        <div className="topicArea">
+            <h4>Topic</h4>
+            <div className="topicInfoArea">
+                <div className="topicField">
+                    <div className="fieldText">Name:</div>
+                    <textarea onChange={handleChangeName} disabled={readOnly} value={name}></textarea>
+                </div>
+                <div className="topicField">
+                    <div className="fieldText">Text:</div>
+                    <textarea className="topicTextArea" onChange={handleChangeFullText} disabled={readOnly} value={fullText}></textarea>
+                </div>
+            </div>
             {type == TopicPageType.EDIT || type == TopicPageType.CREATE ? button : null}
         </div>
     )
