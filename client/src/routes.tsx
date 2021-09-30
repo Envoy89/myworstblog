@@ -22,6 +22,7 @@ const routes: RoutesInt = {
     [MyLinkEnum.LOG_IN]: () => <Auth />,
     [MyLinkEnum.TOPIC_VIEW]: ({ id }: TopicPageProps) => <TopicPage id={id} />,
     [MyLinkEnum.TOPIC_CREATE]: () => <Topic type={TopicPageType.CREATE} />,
+   // [MyLinkEnum.TOPIC_CHANGE]: ({ id }: TopicPageProps) => <Topic type={TopicPageType.CREATE} id={id} />,
 }
 
 export default routes;

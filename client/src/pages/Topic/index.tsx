@@ -21,7 +21,7 @@ const TopicPage: React.FC<TopicPageProps> = ({id}) => {
         useData<ITopic>(Endpoints.GET_TOPIC, query, []);
 
     const topic = data ? <Topic type={TopicPageType.VIEW} value={data} /> :
-    <Topic type={TopicPageType.VIEW} />
+        <Topic type={TopicPageType.VIEW} />
 
     return (
         <div>

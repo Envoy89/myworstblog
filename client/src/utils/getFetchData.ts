@@ -1,14 +1,9 @@
 import { Endpoints } from '../config';
 import config from '../config';
 
-interface IFetchData {
-    method: string,
-    body?: string,
-    headers?: HeadersInit
-  }
 
-function getFetchData(endpoint: Endpoints, body?: object) {
-    const data: IFetchData = {
+function getFetchData(endpoint: Endpoints, body?: object): RequestInit {
+    const data: RequestInit = {
         method: config.client.endpoint[endpoint].method,
     }
 

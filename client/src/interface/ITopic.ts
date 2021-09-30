@@ -1,5 +1,5 @@
 export default interface ITopic {
-    _id ?: number,
-    name: string,
-    fullText: string
+    "_id" ?: number,
+    "name": string,
+    "fullText": string
 }
