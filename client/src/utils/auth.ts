@@ -2,6 +2,7 @@ import { Endpoints } from "../config";
 import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../routes';
 import req from './request';
+import showAlert from "./alert";
 
 const lockalStorageItemName = 'myWorstblogIsAuth';
 
@@ -91,6 +92,6 @@ export const logOut = async () => {
         navigate(MyLinkEnum.HOME);
         document.location.reload();
     } catch(e) {
-        alert(e);
+        showAlert("Error", `${e}`);
     }
 }

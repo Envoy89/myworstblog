@@ -6,6 +6,7 @@ import IQuery from '../../interface/IQuery';
 import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../../routes';
 import { TopicPageType } from '../../pages/Topic';
+import showAlert from '../../utils/alert';
 
 export interface TopicProps {
     type: TopicPageType,
@@ -18,16 +19,14 @@ const Topic: React.FC<TopicProps> = ({
     
     const [name, setName] = useState<string>(value?.name || "");
     const [fullText, setFullText] = useState<string>(value?.fullText || "");
-    
-    if (value) {
-        useEffect(() => {
-            setName(value.name || "");
-        }, [value.name])
 
-        useEffect(() => {
-            setFullText(value.fullText || "");
-        }, [value.fullText])
-    }
+    useEffect(() => {
+        setName(value?.name || "");
+    }, [value?.name])
+
+    useEffect(() => {
+        setFullText(value?.fullText || "");
+    }, [value?.fullText])
 
     const handleChangeName = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const targetValue = e.target.value;
@@ -52,7 +51,7 @@ const Topic: React.FC<TopicProps> = ({
         
             navigate(MyLinkEnum.HOME);
         } catch(e) {
-            alert(e);
+            showAlert("Error", `${e}`);
         }
     }
 
@@ -73,7 +72,7 @@ const Topic: React.FC<TopicProps> = ({
         
             navigate(MyLinkEnum.HOME);
         } catch(e) {
-            alert(e);
+            showAlert("Error", `${e}`);
         }
     }
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import req from '../utils/request';
 import { Endpoints } from '../config';
 import IQuery from '../interface/IQuery';
+import showAlert from '../utils/alert';
 
 const useData = <T>(
   endpoint: Endpoints, query: IQuery, deps: (number | boolean)[] = [] 
@@ -20,7 +21,7 @@ const useData = <T>(
         setData(result);
       } catch (e) {
         setIsError(true);
-        alert(e); //todo set better alert
+        showAlert("Error", `${e}`);
       } finally {
         setIsLoading(false);
       }

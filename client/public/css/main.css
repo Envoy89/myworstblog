@@ -56,3 +56,28 @@ p.topicFullText {
 .topicTextArea {
     height: 200px;
 }
+
+.popupcontainer {
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+    z-index: 98;
+}
+
+.popup {
+    position:fixed;
+    top:15%;
+    left: 27%;
+    z-index: 99;
+    opacity: 1;
+}
+
+.popupcontent {
+    min-width: 350px;
+}
+
+.popupcontent a {
+    cursor: pointer;
+}

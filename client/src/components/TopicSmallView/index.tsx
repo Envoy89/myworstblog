@@ -5,6 +5,7 @@ import { Endpoints } from '../../config';
 import { isAuthenticate } from '../../utils/auth';
 import { MyLinkEnum } from '../../routes';
 import IQuery from '../../interface/IQuery';
+import showAlert from '../../utils/alert';
 
 interface TopicProps {
     _id: number,
@@ -30,7 +31,7 @@ const TopicSmallView: React.FC<TopicProps> = ({
             navigate(MyLinkEnum.HOME);
             document.location.reload();
         } catch(e) {
-            alert(e);
+            showAlert("Error", `${e}`);
         }
     }
 
