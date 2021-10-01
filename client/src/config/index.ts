@@ -23,6 +23,7 @@ export enum Endpoints {
     GET_TOPICS = 'getTopics',
     GET_TOPIC = 'getTopic',
     CREATE_TOPIC = 'createTopic',
+    EDIT_TOPIC = 'editTopic',
     DELETE_TOPIC = 'deleteTopic',
     LOG_IN = 'login',
     REGISTER = 'register',
@@ -46,6 +47,38 @@ const config: IConfig = {
                 method: Method.GET,
                 uri: {
                     pathname: '/api/topics'
+                }
+            },
+            [Endpoints.GET_TOPIC]: {
+                method: Method.GET,
+                uri: {
+                    pathname: '/api/topics/{id}'
+                }
+            },
+            [Endpoints.CREATE_TOPIC]: {
+                method: Method.POST,
+                headers: {
+                    "Accept": 'application/json, text/plain, */*',
+                    "Content-Type": 'application/json'
+                },
+                uri: {
+                    pathname: '/api/topics'
+                }
+            },
+            [Endpoints.EDIT_TOPIC]: {
+                method: Method.POST,
+                headers: {
+                    "Accept": 'application/json, text/plain, */*',
+                    "Content-Type": 'application/json'
+                },
+                uri: {
+                    pathname: '/api/topics/{id}'
+                }
+            },
+            [Endpoints.DELETE_TOPIC]: {
+                method: Method.DELETE,
+                uri: {
+                    pathname: '/api/topics/{id}'
                 }
             },
             [Endpoints.LOG_IN]: {
@@ -74,28 +107,6 @@ const config: IConfig = {
                     pathname: '/api/auth/logOut'
                 }
             },
-            [Endpoints.CREATE_TOPIC]: {
-                method: Method.POST,
-                headers: {
-                    "Accept": 'application/json, text/plain, */*',
-                    "Content-Type": 'application/json'
-                },
-                uri: {
-                    pathname: '/api/topics'
-                }
-            },
-            [Endpoints.GET_TOPIC]: {
-                method: Method.GET,
-                uri: {
-                    pathname: '/api/topics/{id}'
-                }
-            },
-            [Endpoints.DELETE_TOPIC]: {
-                method: Method.DELETE,
-                uri: {
-                    pathname: '/api/topics/{id}'
-                }
-            }
         }
     }
 }

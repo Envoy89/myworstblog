@@ -25,6 +25,7 @@ const useData = <T>(
         setIsLoading(false);
       }
     };
+    
     getData();
   }, deps);
   

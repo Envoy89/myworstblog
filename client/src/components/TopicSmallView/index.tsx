@@ -34,11 +34,16 @@ const TopicSmallView: React.FC<TopicProps> = ({
         }
     }
 
+    const editTopic = () => {
+        navigate(MyLinkEnum.TOPIC_CHANGE.replace(':id', `${_id}`));
+    }
+
     const authUserButtons = isAuth ? <div className="col s4 topicControlButton">
         <button 
             className="btn waves-effect waves-light" 
             type="submit" 
             name="action" 
+            onClick={editTopic}
         >
             Edit
         </button>

@@ -1,28 +1,40 @@
 import React from 'react';
 import Loader from '../../components/Loader';
-import Topic, { TopicPageType } from '../../components/Topic';
+import Topic from '../../components/Topic';
 import { Endpoints } from '../../config';
 import useData from '../../hooks/useData';
 import IQuery from '../../interface/IQuery';
 import ITopic from '../../interface/ITopic';
 
-export interface TopicPageProps {
-    id: number
+export enum TopicPageType {
+    CREATE,
+    EDIT,
+    VIEW
 }
 
-const TopicPage: React.FC<TopicPageProps> = ({id}) => {
-    const query: IQuery = {
-        id
-    }
+export interface TopicPageProps {
+    id?: number,
+    type: TopicPageType,
+}
 
-    const { data, isLoading } = 
-        useData<ITopic>(Endpoints.GET_TOPIC, query, []);
+const TopicPage: React.FC<TopicPageProps> = ({ id, type }) => {
 
-    const topic = data ? <Topic type={TopicPageType.VIEW} value={data} /> :
-        <Topic type={TopicPageType.VIEW} />
+    let topic = <Topic type={TopicPageType.CREATE} />
+    
+    if ((type == TopicPageType.VIEW || type == TopicPageType.EDIT) && id) {
+        const query: IQuery = {
+            id
+        }
 
-    if (isLoading) {
-        return <Loader />
+        const { data, isLoading } = 
+            useData<ITopic>(Endpoints.GET_TOPIC, query, []);
+
+        if (isLoading) {
+            return <Loader />
+        }
+
+        topic = data ? <Topic type={type} value={data} /> :
+            <Topic type={type} />
     }
 
     return (

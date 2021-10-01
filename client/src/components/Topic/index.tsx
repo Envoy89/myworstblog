@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Endpoints } from "../../config";
 import req from '../../utils/request';
 import ITopic from '../../interface/ITopic';
+import IQuery from '../../interface/IQuery';
 import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../../routes';
-
-export enum TopicPageType {
-    CREATE,
-    EDIT,
-    VIEW
-}
+import { TopicPageType } from '../../pages/Topic';
 
 export interface TopicProps {
     type: TopicPageType,
@@ -23,13 +19,15 @@ const Topic: React.FC<TopicProps> = ({
     const [name, setName] = useState<string>(value?.name || "");
     const [fullText, setFullText] = useState<string>(value?.fullText || "");
     
-    useEffect(() => {
-        setName(value?.name || "");
-    }, [value?.name])
+    if (value) {
+        useEffect(() => {
+            setName(value.name || "");
+        }, [value.name])
 
-    useEffect(() => {
-        setFullText(value?.fullText || "");
-    }, [value?.fullText])
+        useEffect(() => {
+            setFullText(value.fullText || "");
+        }, [value.fullText])
+    }
 
     const handleChangeName = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const targetValue = e.target.value;
@@ -58,8 +56,25 @@ const Topic: React.FC<TopicProps> = ({
         }
     }
 
-    const handleEdit = () => {
+    const handleEdit = async () => {
+        if (!value || !value._id) return;
 
+        const topic: ITopic = {
+            name,
+            fullText
+        }
+
+        const query:IQuery = {
+            id: value._id
+        }
+
+        try {
+            const result: ITopic = await req<ITopic>(Endpoints.EDIT_TOPIC, query, topic);
+        
+            navigate(MyLinkEnum.HOME);
+        } catch(e) {
+            alert(e);
+        }
     }
 
     const button = <button 
