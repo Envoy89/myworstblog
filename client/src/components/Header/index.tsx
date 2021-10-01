@@ -10,7 +10,7 @@ const Header = () => {
     const loginOrLogout = isAuth ? <li><a onClick={logOut}>Log out</a></li> : 
         <li><A href="/login">Log In</A></li>
 
-    return <nav>
+    return <nav className="header">
         <div className="nav-wrapper teal lighten-2">
             <A href="/" className="brand-logo left">My worst blog</A>
             <ul id="nav-mobile" className="right">

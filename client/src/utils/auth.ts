@@ -2,8 +2,9 @@ import { Endpoints } from "../config";
 import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../routes';
 import req from './request';
+import showAlert from "./alert";
 
-const lockalStorageItemName = 'myworstblogtoken';
+const lockalStorageItemName = 'myWorstblogIsAuth';
 
 interface IUser {
     login: string,
@@ -22,7 +23,7 @@ export const logIn = async (
     login: string, 
     password: string, 
     successCallback?: () => void,
-    errorCallback?: () => void
+    errorCallback?: (e: any) => void
 ) => {
     await useLogInOrSignUp(
         login, password, Endpoints.LOG_IN, successCallback, errorCallback
@@ -33,7 +34,7 @@ export const register = async (
     login: string, 
     password: string,
     successCallback?: () => void,
-    errorCallback?: () => void
+    errorCallback?: (e: any) => void
 ) => {
     await useLogInOrSignUp(
         login, password, Endpoints.REGISTER, successCallback, errorCallback
@@ -45,60 +46,52 @@ const useLogInOrSignUp = async (
     password: string, 
     endpoint: Endpoints, 
     successCallback?: () => void,
-    errorCallback?: () => void
+    errorCallback?: (e: any) => void
 ) => {
     if (login === "" || password === "") {
         return;
     } else {
-        const query: IUser = {
+        const body: IUser = {
             login,
             password
         }
         
         try {
-            const result: IToken = await req<IToken>(endpoint, undefined, query);
+            const result: IToken = await req<IToken>(endpoint, undefined, body);
 
-            if (result.user) {
-                setToken(result.user.token);
-                if (successCallback) {
-                    successCallback();
-                }
-            } else {
-                if (errorCallback) {
-                    errorCallback();
-                }
+            setAuth();
+
+            if (successCallback) {
+                successCallback();
             }
+            
         } catch (e) {
             if (errorCallback) {
-                errorCallback();
+                errorCallback(e);
             }
         }
     }
 }
 
-const setToken = (token: string) => {
-    localStorage.setItem(lockalStorageItemName, token);
+const setAuth = () => {
+    localStorage.setItem(lockalStorageItemName, "true");
 }
 
 export const isAuthenticate = (): boolean => {
-    const token = localStorage.getItem(lockalStorageItemName);
-    if (token) {
+    const isAuth = localStorage.getItem(lockalStorageItemName);
+    if (isAuth) {
         return true;
     }
     return false;
 }
 
-export const getToken = (): string => {
-    const token = localStorage.getItem(lockalStorageItemName);
-    if (token) {
-        return token;
-    }
-    return "";
-}
-
 export const logOut = async () => {
-    await req(Endpoints.LOG_OUT, undefined, undefined);
-    localStorage.removeItem(lockalStorageItemName);
-    navigate(MyLinkEnum.HOME);
-    document.location.reload();
+    try {
+        await req(Endpoints.LOG_OUT, undefined, undefined);
+        localStorage.removeItem(lockalStorageItemName);
+        navigate(MyLinkEnum.HOME);
+        document.location.reload();
+    } catch(e) {
+        showAlert("Error", `${e}`);
+    }
 }

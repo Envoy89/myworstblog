@@ -7,7 +7,8 @@
     "dev": "nodemon -e js,html index.js",
     "copy-static-files": "copyfiles -f ../client/dist/*.html ../client/dist/*.js public",
     "copy-css-static-files": "copyfiles -f ../client/dist/css/*.css public/css",
-    "start": "cross-env BaseHtmlUrl=\"/blog/\" DATABASE_URL=\"mongodb://blog-db:27017/blog\" PORT=3000 node index.js",
+    "start": "cross-env DATABASE_URL=\"mongodb://blog-db:27017/blog\" PORT=3000 node index.js",
+    "local-start": "cross-env DB_USER=ruzil USER_PASSWORD=123456 DATABASE_URL=\"mongodb://127.0.0.1:27017/blog\" PORT=3000 node index.js",
     "test": "mocha ./test/*"
   },
   "author": "Ruzil",

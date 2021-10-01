@@ -2,11 +2,11 @@
 import { useEffect, useState } from 'react';
 import req from '../utils/request';
 import { Endpoints } from '../config';
+import IQuery from '../interface/IQuery';
+import showAlert from '../utils/alert';
 
-//todo fix object type
-//todo fix any type
 const useData = <T>(
-  endpoint: Endpoints, query: object, deps: any[] = [] 
+  endpoint: Endpoints, query: IQuery, deps: (number | boolean)[] = [] 
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,10 +21,12 @@ const useData = <T>(
         setData(result);
       } catch (e) {
         setIsError(true);
+        showAlert("Error", `${e}`);
       } finally {
         setIsLoading(false);
       }
     };
+    
     getData();
   }, deps);
   

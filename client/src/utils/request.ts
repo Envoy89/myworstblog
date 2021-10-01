@@ -2,17 +2,23 @@ import Url from 'url';
 import getUrlWithParamsConfig from './getUriWIthParamsConfig';
 import { Endpoints } from '../config';
 import getFetchData from './getFetchData';
+import IQuery from '../interface/IQuery';
 
-// todo fix object type
-async function req<T>(endpoint: Endpoints, query?: object, body?: object): Promise<T> {
-  const uri = Url.format(getUrlWithParamsConfig(endpoint, query));
+async function req<T>(endpoint: Endpoints, query?: IQuery, body?: object): Promise<T> {
+  const uri:string = Url.format(getUrlWithParamsConfig(endpoint, query));
   
-  const data = getFetchData(endpoint, body);
+  const data: RequestInit = getFetchData(endpoint, body);
 
   return fetch(uri, {
     credentials: 'include',
     ...data
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error(res.statusText)
+    }
+  });
 }
 
 export default req;

@@ -3,6 +3,7 @@ import { MyLinkEnum } from '../../routes';
 import { navigate } from 'hookrouter';
 import { useState } from 'react';
 import { logIn, register } from '../../utils/auth';
+import showAlert from '../../utils/alert';
 
 interface AuthProps {
     isRegister ?: boolean
@@ -20,8 +21,8 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         setPassword(e.target.value);
     }
 
-    const alertError = () => {
-        alert("Error");
+    const alertError = (e: any) => {
+        showAlert("Error", e);
     }
 
     const handleButton = async () => {

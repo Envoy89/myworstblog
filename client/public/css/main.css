@@ -1,14 +1,83 @@
 body {
+    padding: 0;
+    margin: 0;
+}
+
+#root {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
-main {
-    flex: 1 0 auto;
+.header {
+    height: 65px;
+}
+
+footer {
+    align-items: flex-end;
+    height: 70px;
+}
+
+.mainContainer {
+    min-height: calc(100vh - 135px);
+    max-height: calc(100vh - 135px);
+    overflow: auto;
 }
 
 p.topicFullText {
     overflow: hidden;
     word-wrap: break-word;
+}
+
+.topicControlButton {
+    padding-top: 10px !important;
+}
+
+.topicControlButton button:first-child {
+    margin-right: 5px;
+}
+
+.topicArea {
+    width: 100%;
+    height: 100%;
+    padding: 0 15px;
+}
+
+.topicField {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.fieldText {
+    font-size: 20px;
+    width: 80px;
+}
+
+.topicTextArea {
+    height: 200px;
+}
+
+.popupcontainer {
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+    z-index: 98;
+}
+
+.popup {
+    position:fixed;
+    top:15%;
+    left: 27%;
+    z-index: 99;
+    opacity: 1;
+}
+
+.popupcontent {
+    min-width: 350px;
+}
+
+.popupcontent a {
+    cursor: pointer;
 }
