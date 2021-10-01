@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
 const winston = require('../../config/winston');
-const sendResponseWithError = require('../../utils');
+const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
 router.get(

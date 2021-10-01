@@ -1,7 +1,7 @@
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const winston = require('../../config/winston');
-const sendResponseWithError = require('../../utils');
+const sendResponseWithError = require('../../utils/sendResponseWithError');
 const config = require('config');
 const router = require('express').Router();
 const User = require('../../models/User');

@@ -1,12 +1,17 @@
 version: "3"
 services:
     api:
-        image: envoy89/myworstblog:0.0.2
+        build:
+            context: ./
         ports:
             - "80:3000"
         depends_on:
             - db
         container_name: blog-api
+        environment:
+            - DB_USER=${DB_USER}
+            - USER_PASSWORD=${USER_PASSWORD}
+            - BaseHtmlUrl=${BaseHtmlUrl}
     db:
         image: mongo
         ports:
