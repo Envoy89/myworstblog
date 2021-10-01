@@ -1,3 +1,5 @@
+import getBaseUrl from "../utils/getBaseUrl";
+
 interface IConfig {
     client: {
         server: {
@@ -36,11 +38,19 @@ enum Method {
     DELETE = 'DELETE',
 }
 
+let host = location.hostname + ':' + location.port;
+
+const base = getBaseUrl();
+
+if (base) {
+    host += base;
+}
+
 const config: IConfig = {
     client: {
         server: {
             protocol: 'http',
-            host: location.hostname + ':' + location.port
+            host: host
         },
         endpoint: {
             [Endpoints.GET_TOPICS]: {
