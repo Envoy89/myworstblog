@@ -4,10 +4,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Alert from './components/Alert';
 import routes from './routes';
+import getBaseUrl from './utils/getBaseUrl';
 
-var base = document.getElementsByTagName('base')[0].getAttribute("href");
+const base = getBaseUrl();
 
-if (base && base !== '/') {
+if (base) {
     setBasepath(base);
 }
 
