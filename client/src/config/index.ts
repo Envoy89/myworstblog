@@ -49,7 +49,7 @@ if (base) {
 const config: IConfig = {
     client: {
         server: {
-            protocol: 'http',
+            protocol: location.protocol.substring(0, location.protocol.length - 1),
             host: host
         },
         endpoint: {
