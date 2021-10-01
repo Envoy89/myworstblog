@@ -2,6 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
 const winston = require('../../config/winston');
+const sendResponseWithError = require('../../utils');
 const { query, body, param, validationResult } = require('express-validator');
 
 router.get(
@@ -12,15 +13,19 @@ router.get(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array() });
+            return sendResponseWithError(res, errors.array());
         }
 
-        const { limit: limitString } = req.query;
-        const limit = (+limitString) || 10;
-        
-        const topics = await Topic.find().limit(limit);
+        try {
+            const { limit: limitString } = req.query;
+            const limit = (+limitString) || 10;
+            
+            const topics = await Topic.find().limit(limit);
 
-        return res.json(topics);
+            return res.json(topics);
+        } catch(e) {
+            return sendResponseWithError(res, e.message);
+        }
 });
 
 // topics/
@@ -34,22 +39,21 @@ router.post(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array() });
+            return sendResponseWithError(res, errors.array());
         }
         
-        const newTopic = new Topic({
-            name: req.body.name,
-            fullText: req.body.fullText
-        });
+        try {
+            const newTopic = new Topic({
+                name: req.body.name,
+                fullText: req.body.fullText
+            });
 
-        newTopic.save((error, document) => {
-            if (error) {
-                winston.error(error.message);
-                return res.status(500);
-            }
-        });
+            newTopic.save();
 
-        return res.json(newTopic);
+            return res.json(newTopic);
+        } catch(e) {
+            return sendResponseWithError(res, e.message);
+        }
 });
 
 router.get(
@@ -60,29 +64,46 @@ router.get(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array() });
+            return sendResponseWithError(res, errors.array());
         }
 
-        const id = req.params.id;
         try {
+            const id = req.params.id;
+
             const topic = await Topic.findById(id);
+
             return res.json(topic);
         } catch (e) {
-            winston.error(e.message);
-            return res.status(400).json({ message: 'Something wrong' });
+            return sendResponseWithError(res, e.message);
         }
 });
 
 // todo check
-router.post('/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
-    const id = req.params.id;
-    const topic = await Topic.findById(id);
+router.post(
+    '/:id', 
+    passport.authenticate('jwt', {session: false}), 
+    param('id').notEmpty(),
+    async (req, res) => {
 
-    topic.name = req.body.name;
-    topic.fullText = req.body.text;
+        const errors = validationResult(req);
 
-    await topic.save();
-    return res.json(topic);
+        if (!errors.isEmpty()) {
+            return sendResponseWithError(res, errors.array());
+        }
+
+        try {
+            const id = req.params.id;
+            const topic = await Topic.findById(id);
+
+            topic.name = req.body.name;
+            topic.fullText = req.body.fullText;
+
+            await topic.save();
+
+            return res.json(topic);
+        } catch(e) {
+            return sendResponseWithError(res, e.message);
+        }
 });
 
 // todo check
@@ -95,7 +116,7 @@ router.delete(
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array() });
+            return sendResponseWithError(res, errors.array());
         }
 
         const id = req.params.id;
@@ -104,8 +125,7 @@ router.delete(
             await Topic.findByIdAndDelete(id);
             return res.status(200).json({ message: 'Success delete' });
         } catch(e) {
-            winston.error(e.message);
-            return res.status(400).json({ message: 'Something wrong' });
+            return sendResponseWithError(res, e.message);
         }
 });
 
