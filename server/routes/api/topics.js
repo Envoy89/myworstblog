@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
-const winston = require('../../config/winston');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
 router.get(
     '/', 
-    query('limit').exists().notEmpty(),
+    query('limit').exists().notEmpty().isInt({ min: 1 }),
+    query('pageNumber').exists().notEmpty().isInt({ min: 1}),
     async (req, res) => {
 
         const errors = validationResult(req);
@@ -17,12 +17,16 @@ router.get(
         }
 
         try {
-            const { limit: limitString } = req.query;
-            const limit = (+limitString) || 10;
-            
-            const topics = await Topic.find().limit(limit);
+            const limit = +req.query.limit || 10;
+            const pageNumber = +req.query.pageNumber || 1;
 
-            return res.json(topics);
+            const topicsCount = await Topic.count();
+            const offset = limit * (pageNumber - 1);
+            const topics = await Topic.find().limit(limit).skip(offset);
+
+            return res.json({
+                topics, topicsCount
+            });
         } catch(e) {
             return sendResponseWithError(res, e.message);
         }
