@@ -81,3 +81,14 @@ p.topicFullText {
 .popupcontent a {
     cursor: pointer;
 }
+
+.footer22 {
+    position: absolute;
+    bottom: 59px;
+    left: 0;
+}
+
+.testtest {
+    height: calc(100vh - 174px);
+    overflow: auto;
+}
