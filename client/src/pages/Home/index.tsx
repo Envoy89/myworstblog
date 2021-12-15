@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Loader from '../../components/Loader';
 import TopicSmallView from '../../components/TopicSmallView';
 import { Endpoints } from '../../config';
@@ -8,7 +8,8 @@ import ITopic from '../../interface/ITopic';
 
 const Home = () => {
     const query: IQuery = {
-        limit: 20
+        limit: 20,
+
     }
     const { data, isLoading, isError } = 
         useData<ITopic[]>(Endpoints.GET_TOPICS, query, []);

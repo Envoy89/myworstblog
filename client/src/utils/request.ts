@@ -3,6 +3,7 @@ import getUrlWithParamsConfig from './getUriWIthParamsConfig';
 import { Endpoints } from '../config';
 import getFetchData from './getFetchData';
 import IQuery from '../interface/IQuery';
+import getServerError, {IErrResponse} from "./getServerErrors";
 
 async function req<T>(endpoint: Endpoints, query?: IQuery, body?: object): Promise<T> {
   const uri:string = Url.format(getUrlWithParamsConfig(endpoint, query));
@@ -12,11 +13,13 @@ async function req<T>(endpoint: Endpoints, query?: IQuery, body?: object): Promi
   return fetch(uri, {
     credentials: 'include',
     ...data
-  }).then((res) => {
+  }).then(async (res) => {
     if (res.ok) {
       return res.json();
     } else {
-      throw new Error(res.statusText)
+      const errResponse: IErrResponse = await res.json();
+      const errText: string = getServerError(errResponse);
+      throw new Error(errText);
     }
   });
 }

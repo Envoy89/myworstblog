@@ -4,6 +4,7 @@ const Topic = require('../../models/Topic');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
+// topics/
 router.get(
     '/', 
     query('limit').exists().notEmpty().isInt({ min: 1 }),
@@ -35,7 +36,7 @@ router.get(
 // topics/
 router.post(
     '/', 
-    passport.authenticate('jwt', {session: false}), 
+    passport.authenticate('jwt', {session: false}, () => {}),
     body('name').notEmpty(),
     body('fullText').notEmpty(),
     (req, res) => {
