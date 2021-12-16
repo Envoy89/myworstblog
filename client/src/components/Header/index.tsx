@@ -12,7 +12,7 @@ const Header = () => {
 
     return <nav className="header">
         <div className="nav-wrapper teal lighten-2">
-            <A href="/" className="brand-logo left">My worst blog</A>
+            <A href="/" className="brand-logo left myLogo">My worst blog</A>
             <ul id="nav-mobile" className="right">
                 {topics}
                 {loginOrLogout}

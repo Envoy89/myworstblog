@@ -66,6 +66,10 @@ p.topicFullText {
     z-index: 98;
 }
 
+.myLogo {
+    padding-left: 10px !important;
+}
+
 .popup {
     position:fixed;
     top:15%;
@@ -88,7 +92,11 @@ p.topicFullText {
     left: 0;
 }
 
-.testtest {
+.mainTopics {
     height: calc(100vh - 174px);
     overflow: auto;
+}
+
+.divider {
+    width: 100%;
 }

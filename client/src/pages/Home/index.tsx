@@ -28,7 +28,7 @@ const Home = () => {
 
     return (
         <>
-            <div className="testtest">
+            <div className="mainTopics">
                 {
                     data && data.topics && data.topics.map((val: ITopic) => {
                         return <TopicSmallView
