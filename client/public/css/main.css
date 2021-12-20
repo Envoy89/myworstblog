@@ -1,3 +1,11 @@
+:root {
+    --main-color: #4db6ac;
+    --text-color-on-main-color: white;
+
+    --header-height: 65px;
+    --footer-height: 48px;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -10,17 +18,27 @@ body {
 }
 
 .header {
-    height: 65px;
+    height: var(--header-height);
 }
 
 footer {
     align-items: flex-end;
-    height: 70px;
+    height: var(--footer-height);
+    background-color: var(--main-color);
+}
+
+.footerCopyright {
+    padding-top: calc(var(--footer-height) / 3);
+    padding-left: calc(var(--footer-height) / 3);;
+    font-size: calc(var(--footer-height) / 3);
+    color: var(--text-color-on-main-color);
+    height: 100%;
+    width: 100%;
 }
 
 .mainContainer {
-    min-height: calc(100vh - 135px);
-    max-height: calc(100vh - 135px);
+    min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
+    max-height: calc(100vh - 115px);
     overflow: auto;
 }
 
