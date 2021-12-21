@@ -39,7 +39,7 @@ const Home = () => {
                     })
                 }
             </div>
-            <div className="footer22">
+            <div className="paginationPanel">
                 <Pagination
                     pageNumber={currentPage}
                     elementCount={data?.topicsCount}

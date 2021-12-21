@@ -7,6 +7,8 @@
     --logo-width: 251px;
 
     --footer-height: 48px;
+
+    --pagination-panel-height: 30px;
 }
 
 body {
@@ -76,6 +78,31 @@ footer {
     min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
     max-height: calc(100vh - 115px);
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mainTopics {
+    height: calc(100% - var(--pagination-panel-height));
+    overflow: auto;
+    align-items: flex-start;
+}
+
+.paginationPanel {
+    align-items: flex-end;
+    height: var(--pagination-panel-height);
+}
+
+.pagination {
+    height: var(--pagination-panel-height);
+    margin: 0;
+}
+
+.pagination li, .pagination a, .pagination i {
+    height: var(--pagination-panel-height);
+    font-size: calc(var(--pagination-panel-height) / 3) !important;
+    cursor: pointer;
 }
 
 p.topicFullText {
@@ -136,16 +163,7 @@ p.topicFullText {
     cursor: pointer;
 }
 
-.footer22 {
-    position: absolute;
-    bottom: 59px;
-    left: 0;
-}
 
-.mainTopics {
-    height: calc(100vh - 174px);
-    overflow: auto;
-}
 
 .divider {
     width: 100%;
