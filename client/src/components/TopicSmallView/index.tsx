@@ -66,7 +66,7 @@ const TopicSmallView: React.FC<TopicProps> = ({
     <div className="col s12">
       <p className="topicFullText">{fullText}</p>
     </div>
-    <div className="divider"></div>
+    <div className="divider"/>
   </div>
 }
 

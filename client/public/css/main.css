@@ -1,3 +1,16 @@
+:root {
+    --main-color: #4db6ac;
+    --text-color-on-main-color: white;
+
+    --header-height: 65px;
+    --logo-height: 40px;
+    --logo-width: 251px;
+
+    --footer-height: 48px;
+
+    --pagination-panel-height: 30px;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -9,19 +22,87 @@ body {
     flex-direction: column;
 }
 
-.header {
-    height: 65px;
+header {
+    align-items: flex-start;
+    height: var(--header-height);
+    background-color: var(--main-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.logo {
+    padding-left: 10px;
+    width: var(--logo-width);
+    font-size: var(--logo-height);
+    color: var(--text-color-on-main-color);
+    align-items: center;
+    margin: 0;
+    height: 100%;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.menu li {
+    padding-right: 15px;
+}
+
+.menu li a {
+    color: var(--text-color-on-main-color);
 }
 
 footer {
     align-items: flex-end;
-    height: 70px;
+    height: var(--footer-height);
+    background-color: var(--main-color);
+}
+
+.footerCopyright {
+    padding-top: calc(var(--footer-height) / 3);
+    padding-left: calc(var(--footer-height) / 3);;
+    font-size: calc(var(--footer-height) / 3);
+    color: var(--text-color-on-main-color);
+    height: 100%;
+    width: 100%;
 }
 
 .mainContainer {
-    min-height: calc(100vh - 135px);
-    max-height: calc(100vh - 135px);
+    min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
+    max-height: calc(100vh - 115px);
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mainTopics {
+    height: calc(100% - var(--pagination-panel-height));
+    overflow: auto;
+    align-items: flex-start;
+}
+
+.paginationPanel {
+    align-items: flex-end;
+    height: var(--pagination-panel-height);
+}
+
+.pagination {
+    height: var(--pagination-panel-height);
+    margin: 0;
+}
+
+.pagination li, .pagination a, .pagination i {
+    height: var(--pagination-panel-height);
+    font-size: calc(var(--pagination-panel-height) / 3) !important;
+    cursor: pointer;
 }
 
 p.topicFullText {
@@ -80,4 +161,10 @@ p.topicFullText {
 
 .popupcontent a {
     cursor: pointer;
+}
+
+
+
+.divider {
+    width: 100%;
 }
