@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
+const winston = require('../../config/winston');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
@@ -46,15 +47,23 @@ router.post(
         if (!errors.isEmpty()) {
             return sendResponseWithError(res, errors.array());
         }
-        
+        winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!1")
         try {
             const newTopic = new Topic({
                 name: req.body.name,
                 fullText: req.body.fullText
             });
-
-            newTopic.save();
-
+            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!2")
+            newTopic.save(function (err) {
+                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!3")
+                if (err) {
+                    winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!4")
+                    winston.info(err);
+                    return
+                }
+                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!5")
+            });
+            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!6")
             return res.json(newTopic);
         } catch(e) {
             return sendResponseWithError(res, e.message);
