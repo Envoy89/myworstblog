@@ -9,6 +9,10 @@ const configDataBase = () => {
     // todo add connection params
     mongoose.connect(url, { useNewUrlParser: true });
 
+    mongoose.set("debug", (collectionName, method, query, doc) => {
+        winston.info(`${collectionName}.${method} query: ${JSON.stringify(query)} doc: ${JSON.stringify(doc)}`);
+    });
+
     const db = mongoose.connection
 
     db.once('open', _ => {
