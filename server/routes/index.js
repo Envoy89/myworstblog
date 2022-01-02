@@ -5,6 +5,7 @@ router.get('/ping', (req, res) => {
 })
 
 router.use('/api/topics', require('./api/topics'));
+router.use('/api/tags', require('./api/tags'));
 router.use('/api/auth', require('./api/auth'));
 
 module.exports = router;
