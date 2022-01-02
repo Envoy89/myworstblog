@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
-const winston = require('../../config/winston');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
@@ -34,36 +33,26 @@ router.get(
         }
 });
 
-// topics/
 router.post(
     '/', 
-    passport.authenticate('jwt', {session: false}, () => {}),
+    passport.authenticate('jwt', {session: false}),
     body('name').notEmpty(),
     body('fullText').notEmpty(),
-    (req, res) => {
+    async (req, res) => {
 
         const errors = validationResult(req);
-
         if (!errors.isEmpty()) {
             return sendResponseWithError(res, errors.array());
         }
-        winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+
         try {
             const newTopic = new Topic({
                 name: req.body.name,
                 fullText: req.body.fullText
             });
-            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!2")
-            newTopic.save(function (err) {
-                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!3")
-                if (err) {
-                    winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!4")
-                    winston.info(err);
-                    return
-                }
-                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!5")
-            });
-            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!6")
+
+            await newTopic.save();
+
             return res.json(newTopic);
         } catch(e) {
             return sendResponseWithError(res, e.message);
@@ -92,11 +81,12 @@ router.get(
         }
 });
 
-// todo check
 router.post(
     '/:id', 
     passport.authenticate('jwt', {session: false}), 
     param('id').notEmpty(),
+    body('name').notEmpty(),
+    body('fullText').notEmpty(),
     async (req, res) => {
 
         const errors = validationResult(req);
@@ -120,7 +110,6 @@ router.post(
         }
 });
 
-// todo check
 router.delete(
     '/:id', 
     passport.authenticate('jwt', {session: false}), 
