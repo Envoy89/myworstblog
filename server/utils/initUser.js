@@ -5,7 +5,6 @@ const initUser = async () => {
     try {
         const login = process.env.DB_USER || "";
         const password = process.env.USER_PASSWORD || "";
-        winston.info(login + '!!!!!!!!!!!!!!!!!!!!')
 
         if (!login || !password) return;
 
