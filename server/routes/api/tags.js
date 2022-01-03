@@ -4,36 +4,43 @@ const {body, validationResult, query, param} = require("express-validator");
 const router = require('express').Router();
 const Tag = require('../../models/Tag');
 
+const TAG_NOT_FOUND = 'Тэг не найден';
+
 // /tags
 router.get(
     '/',
+    passport.authenticate('jwt', {session: false}),
     query('limit').exists().notEmpty().isInt({ min: 1 }),
     query('pageNumber').exists().notEmpty().isInt({ min: 1}),
     async (req, res) => {
-    try {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return sendResponseWithError(res, errors.array());
-        }
-
         try {
-            const limit = +req.query.limit || 10;
-            const pageNumber = +req.query.pageNumber || 1;
+            const errors = validationResult(req);
 
-            const tagCount = await Tag.count();
-            const offset = limit * (pageNumber - 1);
-            const tags = await Tag.find().limit(limit).skip(offset);
+            if (!errors.isEmpty()) {
+                return sendResponseWithError(res, errors.array());
+            }
 
-            return res.json({
-                tags, tagCount
-            });
-        } catch(e) {
+            try {
+                const limit = +req.query.limit || 10;
+                const pageNumber = +req.query.pageNumber || 1;
+
+                const tagCount = await Tag.count({
+                    user: req.user.id
+                });
+                const offset = limit * (pageNumber - 1);
+                const tags = await Tag.find({
+                    user: req.user.id
+                }).limit(limit).skip(offset);
+
+                return res.json({
+                    tags, tagCount
+                });
+            } catch(e) {
+                return sendResponseWithError(res, e.message);
+            }
+        } catch (e) {
             return sendResponseWithError(res, e.message);
         }
-    } catch (e) {
-        return sendResponseWithError(res, e.message);
-    }
 })
 
 router.post(
@@ -49,7 +56,8 @@ router.post(
 
         try {
             const newTag = new Tag({
-                name: req.body.name
+                name: req.body.name,
+                user: req.user.id
             });
 
             await newTag.save();
@@ -62,6 +70,7 @@ router.post(
 
 router.get(
     '/:id',
+    passport.authenticate('jwt', {session: false}),
     param('id').notEmpty(),
     async (req, res) => {
 
@@ -74,9 +83,18 @@ router.get(
         try {
             const id = req.params.id;
 
-            const topic = await Tag.findById(id);
+            const tag = await Tag.findOne({
+                _id: id,
+                user: req.user.id
+            });
 
-            return res.json(topic);
+            if (!tag) {
+                return res.status(404).json({
+                    message: TAG_NOT_FOUND
+                });
+            }
+
+            return res.json(tag);
         } catch (e) {
             return sendResponseWithError(res, e.message);
         }
@@ -98,13 +116,22 @@ router.post(
 
         try {
             const id = req.params.id;
-            const topic = await Tag.findById(id);
+            const tag = await Tag.findOne({
+                _id: id,
+                user: req.user.id
+            });
 
-            topic.name = req.body.name;
+            if (!tag) {
+                return res.status(404).json({
+                    message: TAG_NOT_FOUND
+                });
+            }
 
-            await topic.save();
+            tag.name = req.body.name;
 
-            return res.json(topic);
+            await tag.save();
+
+            return res.json(tag);
         } catch(e) {
             return sendResponseWithError(res, e.message);
         }
@@ -125,7 +152,22 @@ router.delete(
         const id = req.params.id;
 
         try {
-            await Tag.findByIdAndDelete(id);
+            const tag = await Tag.findOne({
+                _id: id,
+                user: req.user.id
+            });
+
+            if (!tag) {
+                return res.status(404).json({
+                    message: TAG_NOT_FOUND
+                });
+            }
+
+            await Tag.findOneAndDelete({
+                _id: id,
+                user: req.user.id
+            });
+
             return res.status(200).json({ message: 'Success delete' });
         } catch(e) {
             return sendResponseWithError(res, e.message);
