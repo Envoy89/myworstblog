@@ -4,6 +4,8 @@ const Topic = require('../../models/Topic');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
 
+const TOPIC_NOT_FOUND = 'Пост не найден';
+
 // topics/
 router.get(
     '/', 
@@ -75,6 +77,12 @@ router.get(
 
             const topic = await Topic.findById(id);
 
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
+
             return res.json(topic);
         } catch (e) {
             return sendResponseWithError(res, e.message);
@@ -98,6 +106,12 @@ router.post(
         try {
             const id = req.params.id;
             const topic = await Topic.findById(id);
+
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
 
             topic.name = req.body.name;
             topic.fullText = req.body.fullText;
@@ -125,6 +139,14 @@ router.delete(
         const id = req.params.id;
 
         try {
+            const topic = await Topic.findById(id);
+
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
+
             await Topic.findByIdAndDelete(id);
             return res.status(200).json({ message: 'Success delete' });
         } catch(e) {
