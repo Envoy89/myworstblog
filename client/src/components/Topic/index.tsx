@@ -7,6 +7,7 @@ import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../../routes';
 import { TopicPageType } from '../../pages/Topic';
 import showAlert from '../../utils/alert';
+import TagsSelector from "../TagsSelector";
 
 export interface TopicProps {
     type: TopicPageType,
@@ -19,6 +20,7 @@ const Topic: React.FC<TopicProps> = ({
     
     const [name, setName] = useState<string>(value?.name || "");
     const [fullText, setFullText] = useState<string>(value?.fullText || "");
+    const [tags, setTags] = useState<string[]>(value?.tags || []);
 
     useEffect(() => {
         setName(value?.name || "");
@@ -27,6 +29,10 @@ const Topic: React.FC<TopicProps> = ({
     useEffect(() => {
         setFullText(value?.fullText || "");
     }, [value?.fullText])
+
+    useEffect(() => {
+        setTags(value?.tags || []);
+    }, [value?.tags])
 
     const handleChangeName = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const targetValue = e.target.value;
@@ -43,11 +49,12 @@ const Topic: React.FC<TopicProps> = ({
     const handleCreate = async () => {
         const topic: ITopic = {
             name,
-            fullText
+            fullText,
+            tags
         }
 
         try {
-            const result: ITopic = await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
+            await req<ITopic>(Endpoints.CREATE_TOPIC, undefined, topic);
         
             navigate(MyLinkEnum.HOME);
         } catch(e) {
@@ -60,7 +67,8 @@ const Topic: React.FC<TopicProps> = ({
 
         const topic: ITopic = {
             name,
-            fullText
+            fullText,
+            tags
         }
 
         const query:IQuery = {
@@ -68,7 +76,7 @@ const Topic: React.FC<TopicProps> = ({
         }
 
         try {
-            const result: ITopic = await req<ITopic>(Endpoints.EDIT_TOPIC, query, topic);
+            await req<ITopic>(Endpoints.EDIT_TOPIC, query, topic);
         
             navigate(MyLinkEnum.HOME);
         } catch(e) {
@@ -85,19 +93,35 @@ const Topic: React.FC<TopicProps> = ({
         {type == TopicPageType.EDIT ? "Изменить" : "Создать"}
     </button>;
 
+
+    const setOneTag = (value: string) => {
+        let newTags = [...tags];
+        if (newTags.includes(value)) {
+            newTags = newTags.filter(x => x != value);
+        } else {
+            newTags.push(value);
+        }
+        setTags(newTags);
+        console.log(newTags);
+    }
+
     return (
         <div className="topicArea">
             <h4>Topic</h4>
             <div className="topicInfoArea">
                 <div className="topicField">
                     <div className="fieldText">Name:</div>
-                    <textarea onChange={handleChangeName} disabled={readOnly} value={name}></textarea>
+                    <textarea onChange={handleChangeName} disabled={readOnly} value={name}/>
                 </div>
                 <div className="topicField">
                     <div className="fieldText">Text:</div>
-                    <textarea className="topicTextArea" onChange={handleChangeFullText} disabled={readOnly} value={fullText}></textarea>
+                    <textarea className="topicTextArea" onChange={handleChangeFullText} disabled={readOnly} value={fullText}/>
                 </div>
             </div>
+            <TagsSelector
+                tags={tags}
+                handleTagSelect={readOnly ? () => {} : setOneTag}
+            />
             {type == TopicPageType.EDIT || type == TopicPageType.CREATE ? button : null}
         </div>
     )

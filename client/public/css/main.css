@@ -190,8 +190,29 @@ p.topicFullText {
     cursor: pointer;
 }
 
-
-
 .divider {
     width: 100%;
+}
+
+.tagsSelector {
+    display: block;
+    height: 290px;
+    margin-bottom: 25px;
+}
+
+.tagsSelector select {
+    display: block;
+    height: 150px;
+}
+
+.selectedTagsList {
+    display: flex;
+}
+
+.selectedTagsList div {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    background: indianred;
 }

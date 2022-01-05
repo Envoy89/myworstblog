@@ -53,6 +53,10 @@ router.post(
                 fullText: req.body.fullText
             });
 
+            if (req.body.tags && req.body.tags.length !== 0) {
+                newTopic.tags = req.body.tags;
+            }
+
             await newTopic.save();
 
             return res.json(newTopic);
@@ -115,6 +119,7 @@ router.post(
 
             topic.name = req.body.name;
             topic.fullText = req.body.fullText;
+            topic.tags = req.body.tags || [];
 
             await topic.save();
 
