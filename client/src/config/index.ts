@@ -30,6 +30,7 @@ export enum Endpoints {
     LOG_IN = 'login',
     REGISTER = 'register',
     LOG_OUT = 'logOut',
+    GET_TAGS = 'getTags'
 }
 
 enum Method {
@@ -115,6 +116,12 @@ const config: IConfig = {
                 method: Method.GET,
                 uri: {
                     pathname: '/api/auth/logOut'
+                }
+            },
+            [Endpoints.GET_TAGS]: {
+                method: Method.GET,
+                uri: {
+                    pathname: '/api/tags'
                 }
             },
         }

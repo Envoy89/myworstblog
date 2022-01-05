@@ -7,6 +7,7 @@ import IQuery from '../../interface/IQuery';
 import ITopic from '../../interface/ITopic';
 import ITopicResponse from "../../interface/ITopicResponse";
 import Pagination from "../../components/Pagination";
+import TagsList from "../../components/TagsList";
 
 const LIMIT = 10;
 
@@ -27,27 +28,32 @@ const Home = () => {
     } 
 
     return (
-        <>
-            <div className="mainTopics">
-                {
-                    data && data.topics && data.topics.map((val: ITopic) => {
-                        return <TopicSmallView
-                            _id = {val._id || 1}
-                            name={val.name}
-                            fullText={val.fullText}
-                        />
-                    })
-                }
+        <div className="topicsAndTagsContainer">
+            <div className="topicWithPaginationContainer">
+                <div className="mainTopics">
+                    {
+                        data && data.topics && data.topics.map((val: ITopic) => {
+                            return <TopicSmallView
+                                _id = {val._id || 1}
+                                name={val.name}
+                                fullText={val.fullText}
+                            />
+                        })
+                    }
+                </div>
+                <div className="paginationPanel">
+                    <Pagination
+                        pageNumber={currentPage}
+                        elementCount={data?.topicsCount}
+                        limit={LIMIT}
+                        changePage={setCurrentPage}
+                    />
+                </div>
             </div>
-            <div className="paginationPanel">
-                <Pagination
-                    pageNumber={currentPage}
-                    elementCount={data?.topicsCount}
-                    limit={LIMIT}
-                    changePage={setCurrentPage}
-                />
+            <div className="topicContainer">
+                <TagsList />
             </div>
-        </>
+        </div>
     )
 }
 
