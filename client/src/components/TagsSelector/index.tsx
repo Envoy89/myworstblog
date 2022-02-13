@@ -3,12 +3,18 @@ import ITag from "../../interface/ITag";
 import {addTag, getTags} from "../../api/tags";
 import TagList from "../TagList";
 
+export enum TagsSelectorType {
+    EDIT,
+    VIEW
+}
+
 interface TagsSelectorProps {
+    type: TagsSelectorType,
     tags: ITag[],
     handleTagSelect: (value: ITag) => void
 }
 
-const TagsSelector: React.FC<TagsSelectorProps> = ({tags, handleTagSelect}) => {
+const TagsSelector: React.FC<TagsSelectorProps> = ({type, tags, handleTagSelect}) => {
 
     const [tagSearchString, setTagSearchString] = useState<string>("");
     const [newTagName, setNewTagName] = useState<string>("");
@@ -37,7 +43,7 @@ const TagsSelector: React.FC<TagsSelectorProps> = ({tags, handleTagSelect}) => {
         }
     }
 
-    return <div className="tagsSelector">
+    const test = type === TagsSelectorType.VIEW ? null : <div>
         <div className="tagSearchContainer">
             <h6 className="tagSearchTitle">Тэги:</h6>
             <div className="tagSearchText">
@@ -55,6 +61,11 @@ const TagsSelector: React.FC<TagsSelectorProps> = ({tags, handleTagSelect}) => {
                 })
             }
         </select>
+    </div>
+
+
+    return <div className="tagsSelector">
+        {test}
         <TagList tags={tags} handleTagSelect={handleTagSelect} />
     </div>
 }

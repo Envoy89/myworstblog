@@ -7,7 +7,7 @@ import { navigate } from 'hookrouter';
 import { MyLinkEnum } from '../../routes';
 import { TopicPageType } from '../../pages/Topic';
 import showAlert from '../../utils/alert';
-import TagsSelector from "../TagsSelector";
+import TagsSelector, {TagsSelectorType} from "../TagsSelector";
 import ITag from "../../interface/ITag";
 
 export interface TopicProps {
@@ -118,6 +118,7 @@ const Topic: React.FC<TopicProps> = ({
                 </div>
             </div>
             <TagsSelector
+                type={readOnly ? TagsSelectorType.VIEW : TagsSelectorType.EDIT}
                 tags={tags}
                 handleTagSelect={readOnly ? () => {} : setOneTag}
             />
