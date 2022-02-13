@@ -18,7 +18,7 @@ const Home = () => {
         pageNumber: currentPage
     }
     const { data, isLoading, isError } = 
-        useData<ITopicResponse>(Endpoints.GET_TOPICS, query, [currentPage]);
+        useData<ITopicResponse>(Endpoints.GET_TOPICS, query, undefined, [currentPage]);
 
     if (isLoading) {
         return <Loader />
@@ -27,27 +27,30 @@ const Home = () => {
     } 
 
     return (
-        <>
-            <div className="mainTopics">
-                {
-                    data && data.topics && data.topics.map((val: ITopic) => {
-                        return <TopicSmallView
-                            _id = {val._id || 1}
-                            name={val.name}
-                            fullText={val.fullText}
-                        />
-                    })
-                }
+        <div className="topicsAndTagsContainer">
+            <div className="topicWithPaginationContainer">
+                <div className="mainTopics">
+                    {
+                        data && data.topics && data.topics.map((val: ITopic) => {
+                            return <TopicSmallView
+                                _id = {val._id || 1}
+                                name={val.name}
+                                fullText={val.fullText}
+                                tags={val.tags}
+                            />
+                        })
+                    }
+                </div>
+                <div className="paginationPanel">
+                    <Pagination
+                        pageNumber={currentPage}
+                        elementCount={data?.topicsCount}
+                        limit={LIMIT}
+                        changePage={setCurrentPage}
+                    />
+                </div>
             </div>
-            <div className="paginationPanel">
-                <Pagination
-                    pageNumber={currentPage}
-                    elementCount={data?.topicsCount}
-                    limit={LIMIT}
-                    changePage={setCurrentPage}
-                />
-            </div>
-        </>
+        </div>
     )
 }
 

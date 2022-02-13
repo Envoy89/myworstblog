@@ -6,15 +6,18 @@ import { isAuthenticate } from '../../utils/auth';
 import { MyLinkEnum } from '../../routes';
 import IQuery from '../../interface/IQuery';
 import showAlert from '../../utils/alert';
+import ITag from "../../interface/ITag";
+import TagList from "../TagList";
 
 interface TopicProps {
     _id: number,
     name: String,
     fullText: String,
+    tags?: ITag[]
 }
 
 const TopicSmallView: React.FC<TopicProps> = ({
-    _id, name, fullText
+    _id, name, fullText, tags
 }) => {
     const topicNameClass: string = "col s8"
 
@@ -58,14 +61,19 @@ const TopicSmallView: React.FC<TopicProps> = ({
         </button>
     </div> : null;
 
+    const tagsContainer = tags ? <div className="col s12">
+        <TagList tags={tags} handleTagSelect={() => {}} />
+    </div>: null;
+
     return <div className="row">
         <div className={topicNameClass}>
             <h5><A href={`/topic/${_id}`}>{name}</A></h5>
         </div>
         {authUserButtons}
-    <div className="col s12">
-      <p className="topicFullText">{fullText}</p>
-    </div>
+        <div className="col s12">
+          <p className="topicFullText">{fullText}</p>
+        </div>
+        {tagsContainer}
     <div className="divider"/>
   </div>
 }

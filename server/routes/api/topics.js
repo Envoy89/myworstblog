@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
 const Topic = require('../../models/Topic');
-const winston = require('../../config/winston');
 const sendResponseWithError = require('../../utils/sendResponseWithError');
 const { query, body, param, validationResult } = require('express-validator');
+
+const TOPIC_NOT_FOUND = 'Пост не найден';
 
 // topics/
 router.get(
@@ -34,36 +35,30 @@ router.get(
         }
 });
 
-// topics/
 router.post(
     '/', 
-    passport.authenticate('jwt', {session: false}, () => {}),
+    passport.authenticate('jwt', {session: false}),
     body('name').notEmpty(),
     body('fullText').notEmpty(),
-    (req, res) => {
+    async (req, res) => {
 
         const errors = validationResult(req);
-
         if (!errors.isEmpty()) {
             return sendResponseWithError(res, errors.array());
         }
-        winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+
         try {
             const newTopic = new Topic({
                 name: req.body.name,
                 fullText: req.body.fullText
             });
-            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!2")
-            newTopic.save(function (err) {
-                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!3")
-                if (err) {
-                    winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!4")
-                    winston.info(err);
-                    return
-                }
-                winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!5")
-            });
-            winston.info("!!!!!!!!!!!!!!!!!!!!!!!!!!6")
+
+            if (req.body.tags && req.body.tags.length !== 0) {
+                newTopic.tags = req.body.tags;
+            }
+
+            await newTopic.save();
+
             return res.json(newTopic);
         } catch(e) {
             return sendResponseWithError(res, e.message);
@@ -86,17 +81,24 @@ router.get(
 
             const topic = await Topic.findById(id);
 
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
+
             return res.json(topic);
         } catch (e) {
             return sendResponseWithError(res, e.message);
         }
 });
 
-// todo check
 router.post(
     '/:id', 
     passport.authenticate('jwt', {session: false}), 
     param('id').notEmpty(),
+    body('name').notEmpty(),
+    body('fullText').notEmpty(),
     async (req, res) => {
 
         const errors = validationResult(req);
@@ -109,8 +111,15 @@ router.post(
             const id = req.params.id;
             const topic = await Topic.findById(id);
 
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
+
             topic.name = req.body.name;
             topic.fullText = req.body.fullText;
+            topic.tags = req.body.tags || [];
 
             await topic.save();
 
@@ -120,7 +129,6 @@ router.post(
         }
 });
 
-// todo check
 router.delete(
     '/:id', 
     passport.authenticate('jwt', {session: false}), 
@@ -136,6 +144,14 @@ router.delete(
         const id = req.params.id;
 
         try {
+            const topic = await Topic.findById(id);
+
+            if (!topic) {
+                return res.status(404).json({
+                    message: TOPIC_NOT_FOUND
+                })
+            }
+
             await Topic.findByIdAndDelete(id);
             return res.status(200).json({ message: 'Success delete' });
         } catch(e) {

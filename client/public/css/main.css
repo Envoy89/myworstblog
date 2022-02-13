@@ -83,10 +83,37 @@ footer {
     justify-content: space-between;
 }
 
+.topicsAndTagsContainer {
+    min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
+    max-height: calc(100vh - 115px);
+    display: flex;
+}
+
+.topicWithPaginationContainer {
+    border-right: 1px solid #e0e0e0;
+    overflow: auto;
+    width: 100%;
+}
+
+.topicWithPaginationContainer::-webkit-scrollbar {
+    width: 0;
+}
+
 .mainTopics {
     height: calc(100% - var(--pagination-panel-height));
     overflow: auto;
     align-items: flex-start;
+}
+
+.topicList {
+    width: 85%;
+    border-right: 1px solid #e0e0e0;
+}
+
+.tagList {
+
+    width: 15%;
+    height: 100%;
 }
 
 .paginationPanel {
@@ -163,8 +190,49 @@ p.topicFullText {
     cursor: pointer;
 }
 
-
-
 .divider {
     width: 100%;
+}
+
+.tagsSelector {
+    display: block;
+    height: 290px;
+    margin-bottom: 25px;
+}
+
+.tagsSelector select {
+    display: block;
+    height: 150px;
+}
+
+.selectedTagsList {
+    display: flex;
+}
+
+.selectedTagsList div {
+    margin: 0 5px 5px 0;
+    padding: 5px;
+    cursor: pointer;
+    background: #b2dfdb;
+    line-height: 1;
+}
+
+.selectableOption {
+    cursor: pointer;
+}
+
+.tagSearchContainer {
+    display: flex;
+}
+
+.tagSearchTitle {
+    width: 5%;
+}
+
+.tagSearchText {
+    width: 95%;
+}
+
+.tagsSelectorList {
+    margin-bottom: 5px;
 }
