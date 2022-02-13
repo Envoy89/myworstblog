@@ -30,7 +30,9 @@ export enum Endpoints {
     LOG_IN = 'login',
     REGISTER = 'register',
     LOG_OUT = 'logOut',
-    GET_TAGS = 'getTags'
+
+    GET_TAGS = 'getTags',
+    CREATE_TAGS = 'createTags'
 }
 
 enum Method {
@@ -120,6 +122,16 @@ const config: IConfig = {
             },
             [Endpoints.GET_TAGS]: {
                 method: Method.GET,
+                uri: {
+                    pathname: '/api/tags'
+                }
+            },
+            [Endpoints.CREATE_TAGS]: {
+                method: Method.POST,
+                headers: {
+                    "Accept": 'application/json, text/plain, */*',
+                    "Content-Type": 'application/json'
+                },
                 uri: {
                     pathname: '/api/tags'
                 }

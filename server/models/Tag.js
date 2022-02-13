@@ -5,11 +5,6 @@ const tagSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
     }
 });
 

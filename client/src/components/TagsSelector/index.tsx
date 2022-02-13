@@ -1,53 +1,61 @@
-import React from 'react';
-import IQuery from "../../interface/IQuery";
-import useData from "../../hooks/useData";
-import ITagResponse from "../../interface/ITagResponse";
-import {Endpoints} from "../../config";
+import React, {useEffect, useState} from 'react';
 import ITag from "../../interface/ITag";
+import {addTag, getTags} from "../../api/tags";
+import TagList from "../TagList";
 
 interface TagsSelectorProps {
-    tags: string[],
-    handleTagSelect: (value: string) => void
+    tags: ITag[],
+    handleTagSelect: (value: ITag) => void
 }
-
-const LIMIT = 500;
 
 const TagsSelector: React.FC<TagsSelectorProps> = ({tags, handleTagSelect}) => {
 
-    const query: IQuery = {
-        limit: LIMIT,
-        pageNumber: 1
+    const [tagSearchString, setTagSearchString] = useState<string>("");
+    const [newTagName, setNewTagName] = useState<string>("");
+
+    const { data: newTag } = addTag(newTagName);
+    const { data: tagsData } = getTags(tagSearchString);
+
+    useEffect(() => {
+        setTagSearchString("");
+        newTag && handleTagSelect(newTag);
+    }, [newTag])
+
+    const handleClick = (event: React.BaseSyntheticEvent) => {
+        const tag = tagsData?.tags.find(x => x._id === event.target?.value);
+        tag && handleTagSelect(tag);
     }
-    const { data } =
-        useData<ITagResponse>(Endpoints.GET_TAGS, query, [1]);
 
-    //todo loader and error handle
+    const handleTagSearchStringChange = (value: React.ChangeEvent<HTMLInputElement>) => {
+        const searchString = value.target.value;
+        setTagSearchString(searchString);
+    }
 
-    const handleClick = (value: React.ChangeEvent<HTMLSelectElement>) => {
-        handleTagSelect(value.target.value);
+    const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Tab') {
+            setNewTagName(tagSearchString);
+        }
     }
 
     return <div className="tagsSelector">
-        <h6>Тэги:</h6>
-        <select size={15} onChange={handleClick}>
+        <div className="tagSearchContainer">
+            <h6 className="tagSearchTitle">Тэги:</h6>
+            <div className="tagSearchText">
+                <input value={tagSearchString}
+                       onChange={handleTagSearchStringChange}
+                       onKeyDown={handleTagInputKeyDown}
+                       placeholder="Введите для поиска (Tab чтобы добавить новый)"
+                />
+            </div>
+        </div>
+        <select size={15} onClick={handleClick} className="tagsSelectorList">
             {
-                data && data.tags && data.tags.map((val: ITag) => {
-                    return <option value={val._id}>{val.name}</option>
+                tagsData && tagsData.tags && tagsData.tags.map((val: ITag) => {
+                    return <option className="selectableOption" value={val._id}>{val.name}</option>
                 })
             }
         </select>
-        <div className="selectedTagsList">
-            {
-                tags.map((val: string) => {
-                    const element = data?.tags.find(x => x._id == val);
-                    return <div onClick={() => {
-                        element && handleTagSelect(element._id)
-                    }}>
-                        {element?.name}
-                    </div>
-                })
-            }
-        </div>
+        <TagList tags={tags} handleTagSelect={handleTagSelect} />
     </div>
 }
 

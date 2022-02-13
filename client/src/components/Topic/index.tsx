@@ -8,6 +8,7 @@ import { MyLinkEnum } from '../../routes';
 import { TopicPageType } from '../../pages/Topic';
 import showAlert from '../../utils/alert';
 import TagsSelector from "../TagsSelector";
+import ITag from "../../interface/ITag";
 
 export interface TopicProps {
     type: TopicPageType,
@@ -20,7 +21,7 @@ const Topic: React.FC<TopicProps> = ({
     
     const [name, setName] = useState<string>(value?.name || "");
     const [fullText, setFullText] = useState<string>(value?.fullText || "");
-    const [tags, setTags] = useState<string[]>(value?.tags || []);
+    const [tags, setTags] = useState<ITag[]>(value?.tags || []);
 
     useEffect(() => {
         setName(value?.name || "");
@@ -93,16 +94,14 @@ const Topic: React.FC<TopicProps> = ({
         {type == TopicPageType.EDIT ? "Изменить" : "Создать"}
     </button>;
 
-
-    const setOneTag = (value: string) => {
+    const setOneTag = (value: ITag) => {
         let newTags = [...tags];
-        if (newTags.includes(value)) {
-            newTags = newTags.filter(x => x != value);
+        if (newTags.find(x => x._id === value._id)) {
+            newTags = newTags.filter(x => x._id != value._id);
         } else {
             newTags.push(value);
         }
         setTags(newTags);
-        console.log(newTags);
     }
 
     return (

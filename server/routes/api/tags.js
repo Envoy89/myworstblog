@@ -9,7 +9,6 @@ const TAG_NOT_FOUND = 'Тэг не найден';
 // /tags
 router.get(
     '/',
-    passport.authenticate('jwt', {session: false}),
     query('limit').exists().notEmpty().isInt({ min: 1 }),
     query('pageNumber').exists().notEmpty().isInt({ min: 1}),
     async (req, res) => {
@@ -24,13 +23,18 @@ router.get(
                 const limit = +req.query.limit || 10;
                 const pageNumber = +req.query.pageNumber || 1;
 
-                const tagCount = await Tag.count({
-                    user: req.user.id
-                });
+                const tagCount = await Tag.count();
                 const offset = limit * (pageNumber - 1);
-                const tags = await Tag.find({
-                    user: req.user.id
-                }).limit(limit).skip(offset);
+
+                let tags;
+
+                if (req.query.searchString) {
+                    tags = await Tag.find({
+                        name: { $regex: '.*' + req.query.searchString + '.*' }
+                    }).limit(limit).skip(offset);
+                } else {
+                    tags = await Tag.find().limit(limit).skip(offset);
+                }
 
                 return res.json({
                     tags, tagCount
@@ -55,9 +59,17 @@ router.post(
         }
 
         try {
+
+            const tag = await Tag.findOne({
+                name: req.body.name,
+            });
+
+            if (tag) {
+                return sendResponseWithError(res, "Tag duplicate");
+            }
+
             const newTag = new Tag({
                 name: req.body.name,
-                user: req.user.id
             });
 
             await newTag.save();
@@ -70,7 +82,6 @@ router.post(
 
 router.get(
     '/:id',
-    passport.authenticate('jwt', {session: false}),
     param('id').notEmpty(),
     async (req, res) => {
 
@@ -84,8 +95,7 @@ router.get(
             const id = req.params.id;
 
             const tag = await Tag.findOne({
-                _id: id,
-                user: req.user.id
+                _id: id
             });
 
             if (!tag) {
@@ -117,8 +127,7 @@ router.post(
         try {
             const id = req.params.id;
             const tag = await Tag.findOne({
-                _id: id,
-                user: req.user.id
+                _id: id
             });
 
             if (!tag) {
@@ -153,8 +162,7 @@ router.delete(
 
         try {
             const tag = await Tag.findOne({
-                _id: id,
-                user: req.user.id
+                _id: id
             });
 
             if (!tag) {
@@ -164,8 +172,7 @@ router.delete(
             }
 
             await Tag.findOneAndDelete({
-                _id: id,
-                user: req.user.id
+                _id: id
             });
 
             return res.status(200).json({ message: 'Success delete' });

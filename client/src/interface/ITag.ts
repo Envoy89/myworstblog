@@ -1,5 +1,4 @@
 export default interface ITag {
-    _id: string,
-    name: string,
-    user: string
+    _id ?: string,
+    name: string
 }

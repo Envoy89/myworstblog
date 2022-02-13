@@ -92,7 +92,7 @@ footer {
 .topicWithPaginationContainer {
     border-right: 1px solid #e0e0e0;
     overflow: auto;
-    width: 85%;
+    width: 100%;
 }
 
 .topicWithPaginationContainer::-webkit-scrollbar {
@@ -210,9 +210,29 @@ p.topicFullText {
 }
 
 .selectedTagsList div {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid black;
+    margin: 0 5px 5px 0;
+    padding: 5px;
     cursor: pointer;
-    background: indianred;
+    background: #b2dfdb;
+    line-height: 1;
+}
+
+.selectableOption {
+    cursor: pointer;
+}
+
+.tagSearchContainer {
+    display: flex;
+}
+
+.tagSearchTitle {
+    width: 5%;
+}
+
+.tagSearchText {
+    width: 95%;
+}
+
+.tagsSelectorList {
+    margin-bottom: 5px;
 }

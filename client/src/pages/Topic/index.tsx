@@ -27,7 +27,7 @@ const TopicPage: React.FC<TopicPageProps> = ({ id, type }) => {
         }
 
         const { data, isLoading } = 
-            useData<ITopic>(Endpoints.GET_TOPIC, query, []);
+            useData<ITopic>(Endpoints.GET_TOPIC, query, undefined, []);
 
         if (isLoading) {
             return <Loader />

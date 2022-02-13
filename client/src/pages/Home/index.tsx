@@ -7,7 +7,6 @@ import IQuery from '../../interface/IQuery';
 import ITopic from '../../interface/ITopic';
 import ITopicResponse from "../../interface/ITopicResponse";
 import Pagination from "../../components/Pagination";
-import TagsList from "../../components/TagsList";
 
 const LIMIT = 10;
 
@@ -19,7 +18,7 @@ const Home = () => {
         pageNumber: currentPage
     }
     const { data, isLoading, isError } = 
-        useData<ITopicResponse>(Endpoints.GET_TOPICS, query, [currentPage]);
+        useData<ITopicResponse>(Endpoints.GET_TOPICS, query, undefined, [currentPage]);
 
     if (isLoading) {
         return <Loader />
@@ -37,6 +36,7 @@ const Home = () => {
                                 _id = {val._id || 1}
                                 name={val.name}
                                 fullText={val.fullText}
+                                tags={val.tags}
                             />
                         })
                     }
@@ -49,9 +49,6 @@ const Home = () => {
                         changePage={setCurrentPage}
                     />
                 </div>
-            </div>
-            <div className="topicContainer">
-                <TagsList />
             </div>
         </div>
     )
