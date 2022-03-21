@@ -1,0 +1,10 @@
+kind: pipeline
+name: default
+
+steps:
+- name: test
+  image: node
+  commands:
+  - cd ./server
+  - npm ci
+  - npm test
