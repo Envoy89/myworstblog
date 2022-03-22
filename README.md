@@ -1,3 +1,5 @@
+[![Build Status](https://drone2.theruzil.com/api/badges/Envoy89/myworstblog/status.svg)](https://drone2.theruzil.com/Envoy89/myworstblog)
+
 # Простенький бложик
 
 Простой бложик. Подробное описание https://ruzil33.gitbook.io/my-worst-blog/
