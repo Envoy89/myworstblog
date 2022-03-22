@@ -28,3 +28,4 @@ steps:
     password:
       from_secret: DOCKER_PASSWORD
     repo: envoy89/myworstblog
+    auto_tag: true
