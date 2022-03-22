@@ -20,7 +20,7 @@ describe('Tag', () => {
         const findTag = await Tag.findOne({name}).exec();
 
         expect(findTag).to.exist;
-        expect(findTag.name).to.equal("123");
+        expect(findTag.name).to.equal("1234");
     });
 
     it('can be create correctly many tags', async () => {
