@@ -1,5 +1,5 @@
 kind: pipeline
-name: default
+name: test
 
 steps:
 - name: test
@@ -8,3 +8,23 @@ steps:
   - cd ./server
   - npm ci
   - npm test
+
+---
+kind: pipeline
+name: deploy
+
+trigger:
+  branch:
+  - master
+  event:
+  - tag
+
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: DOCKER_USERNAME
+    password:
+      from_secret: DOCKER_PASSWORD
+    repo: envoy89/myworstblog
