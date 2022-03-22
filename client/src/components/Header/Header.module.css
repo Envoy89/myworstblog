@@ -1,0 +1,49 @@
+.root {
+    align-items: flex-start;
+    height: var(--header-height);
+    background-color: var(--main-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    padding-left: 10px;
+    font-size: 35px;
+    line-height: var(--header-height);
+    color: var(--text-color-on-main-color);
+    align-items: center;
+    margin: 0;
+    height: 100%;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.menu li {
+    padding-right: 15px;
+    font-size: 18px;
+}
+
+.menu li a {
+    color: var(--text-color-on-main-color);
+}
+
+@media only screen
+and (max-width:480px)  {
+    .logo {
+        font-size: 25px;
+    }
+
+    .menu li {
+        font-size: 14px;
+    }
+}

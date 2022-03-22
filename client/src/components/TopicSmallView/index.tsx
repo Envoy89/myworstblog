@@ -8,6 +8,9 @@ import IQuery from '../../interface/IQuery';
 import showAlert from '../../utils/alert';
 import ITag from "../../interface/ITag";
 import TagList from "../TagList";
+import cn from 'classnames';
+
+import s from './TopicSmallView.module.css';
 
 interface TopicProps {
     _id: number,
@@ -19,7 +22,6 @@ interface TopicProps {
 const TopicSmallView: React.FC<TopicProps> = ({
     _id, name, fullText, tags
 }) => {
-    const topicNameClass: string = "col s8"
 
     const isAuth = isAuthenticate();
 
@@ -42,9 +44,9 @@ const TopicSmallView: React.FC<TopicProps> = ({
         navigate(MyLinkEnum.TOPIC_CHANGE.replace(':id', `${_id}`));
     }
 
-    const authUserButtons = isAuth ? <div className="col s4 topicControlButton">
+    const authUserButtons = isAuth ? <div className={s.topicControlButton}>
         <button 
-            className="btn waves-effect waves-light" 
+            className={cn("btn", "waves-effect", "waves-light")}
             type="submit" 
             name="action" 
             onClick={editTopic}
@@ -52,7 +54,7 @@ const TopicSmallView: React.FC<TopicProps> = ({
             Edit
         </button>
         <button 
-            className="waves-effect waves-light btn" 
+            className={cn("btn", "waves-effect", "waves-light")}
             type="submit" 
             name="action"
             onClick={removeTopic}
@@ -61,20 +63,21 @@ const TopicSmallView: React.FC<TopicProps> = ({
         </button>
     </div> : null;
 
-    const tagsContainer = tags ? <div className="col s12">
+    const tagsContainer = tags ? <div className={s.tags}>
         <TagList tags={tags} handleTagSelect={() => {}} />
     </div>: null;
 
-    return <div className="row">
-        <div className={topicNameClass}>
-            <h5><A href={`/topic/${_id}`}>{name}</A></h5>
+    return <div className={s.topicRow}>
+        <div className={s.buttonsContainer}>
+            <div className={s.nameClass}>
+                <A href={`/topic/${_id}`}>{name}</A>
+            </div>
+            {authUserButtons}
         </div>
-        {authUserButtons}
-        <div className="col s12">
-          <p className="topicFullText">{fullText}</p>
+        <div className={s.topicText}>
+          {fullText}
         </div>
         {tagsContainer}
-    <div className="divider"/>
   </div>
 }
 

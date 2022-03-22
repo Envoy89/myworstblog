@@ -1,0 +1,68 @@
+.topicRow {
+    margin-top: 15px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.nameClass {
+    overflow: hidden;
+    font-weight: 700;
+    padding: 0 15px 0 15px;
+}
+
+.nameClass a {
+    display: block;
+    color: black;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tags {
+    margin: 5px 15px 5px 15px;
+    overflow: hidden;
+}
+
+.topicText {
+    max-height: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    margin: 15px;
+    font-size: 15px;
+}
+
+@media only screen
+and (max-width:480px)  {
+    .nameClass {
+        font-size: 16px;
+        line-height: 30px;
+    }
+
+    .topicControlButton {
+        display: none;
+    }
+
+    .topicText {
+        display: none;
+    }
+}
+
+@media only screen
+and (min-width:480px)  {
+    .nameClass {
+        font-size: 22px;
+        line-height: 40px;
+        max-width: 60%;
+    }
+
+    .buttonsContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .topicControlButton button {
+        margin-right: 15px;
+    }
+}
+

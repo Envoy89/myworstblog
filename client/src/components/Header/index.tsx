@@ -3,6 +3,8 @@ import { MyLinkEnum } from '../../routes';
 import { isAuthenticate, logOut } from '../../utils/auth';
 import { A } from 'hookrouter';
 
+import s from './Header.module.css';
+
 const Header = () => {
     const isAuth = isAuthenticate();
 
@@ -10,13 +12,13 @@ const Header = () => {
     const loginOrLogout = isAuth ? <li><a onClick={logOut}>Log out</a></li> : 
         <li><A href="/login">Log In</A></li>
 
-    return <header className="header">
-        <A href="/" className="logo">My worst blog</A>
-        <ul className="menu">
+    return <div className={s.root}>
+        <A href="/" className={s.logo}>My worst blog</A>
+        <ul className={s.menu}>
             {topics}
             {loginOrLogout}
         </ul>
-    </header>
+    </div>
 }
 
 export default Header;
