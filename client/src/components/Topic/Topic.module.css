@@ -23,6 +23,7 @@
 
 .button {
     margin-left: 15px;
+    z-index: 0;
 }
 
 @media only screen

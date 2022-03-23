@@ -97,16 +97,6 @@ const Topic: React.FC<TopicProps> = ({
         {type == TopicPageType.EDIT ? "Изменить" : "Создать"}
     </button>;
 
-    const setOneTag = (value: ITag) => {
-        let newTags = [...tags];
-        if (newTags.find(x => x._id === value._id)) {
-            newTags = newTags.filter(x => x._id != value._id);
-        } else {
-            newTags.push(value);
-        }
-        setTags(newTags);
-    }
-
     const topicName = readOnly ? <div className={s.topicName}>{name}</div> : <div className={s.topicField}>
         <textarea onChange={handleChangeName} disabled={readOnly} value={name}/>
     </div>
@@ -124,7 +114,7 @@ const Topic: React.FC<TopicProps> = ({
             <TagsSelector
                 type={readOnly ? TagsSelectorType.VIEW : TagsSelectorType.EDIT}
                 tags={tags}
-                handleTagSelect={readOnly ? () => {} : setOneTag}
+                handleTagSelect={readOnly ? () => {} : setTags}
             />
             {type == TopicPageType.EDIT || type == TopicPageType.CREATE ? button : null}
         </div>

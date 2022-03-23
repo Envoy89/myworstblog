@@ -10,7 +10,7 @@ const TagList: React.FC<TagListProps> = ({tags, handleTagSelect}) => {
     return <div className="selectedTagsList">
         {
             tags.map((val: ITag) => {
-                return <div onClick={() => {
+                return <div key={val._id} onClick={() => {
                     handleTagSelect(val)
                 }}>
                     {val.name}
