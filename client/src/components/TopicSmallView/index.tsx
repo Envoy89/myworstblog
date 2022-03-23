@@ -11,11 +11,12 @@ import TagList from "../TagList";
 import cn from 'classnames';
 
 import s from './TopicSmallView.module.css';
+import MarkdownViewer from "../MarkdownViewer";
 
 interface TopicProps {
     _id: number,
-    name: String,
-    fullText: String,
+    name: string,
+    fullText: string,
     tags?: ITag[]
 }
 
@@ -70,12 +71,12 @@ const TopicSmallView: React.FC<TopicProps> = ({
     return <div className={s.topicRow}>
         <div className={s.buttonsContainer}>
             <div className={s.nameClass}>
-                <A href={`/topic/${_id}`}>{name}</A>
+                <A href={`/topic/${_id}`}><MarkdownViewer text={name} /></A>
             </div>
             {authUserButtons}
         </div>
         <div className={s.topicText}>
-          {fullText}
+          <MarkdownViewer text={fullText} />
         </div>
         {tagsContainer}
   </div>

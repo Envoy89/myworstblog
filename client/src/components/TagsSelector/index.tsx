@@ -54,6 +54,7 @@ const TagsSelector: React.FC<TagsSelectorProps> = ({type, tags, handleTagSelect}
                 isMulti
                 loadOptions={getTagsWithPromiseForSelector}
                 onChange={handleChange}
+                menuPlacement="auto"
                 onCreateOption={async (tagName) => { await addTag(tagName); }}
             />
         </div>

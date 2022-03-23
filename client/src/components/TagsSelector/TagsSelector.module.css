@@ -1,5 +1,10 @@
 .tagsSelector {
     margin: 15px;
+    height: 38px;
+}
+
+.tagsSelector input[type=text]:not(.browser-default) {
+    height: 22px;
 }
 
 .tagsSelectorView {
