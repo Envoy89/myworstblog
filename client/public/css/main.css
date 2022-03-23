@@ -16,6 +16,32 @@ and (max-width:480px)  {
     }
 }
 
+/* todo убрать после выпила materialize css */
+.markdown-body [type="checkbox"]:not(:checked),
+.markdown-body [type="checkbox"]:checked {
+    position: inherit;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.markdown-body ul {
+    list-style-type: disc;
+}
+
+.markdown-body ul:not(.browser-default)>li {
+    list-style-type: disc;
+}
+
+.markdown-body ul:not(.browser-default) {
+    list-style-type: disc;
+}
+
+.markdown-body ul:not(.browser-default)>li.task-list-item {
+    list-style-type: none;
+}
+
+/* todo end */
+
 body {
     padding: 0;
     margin: 0;

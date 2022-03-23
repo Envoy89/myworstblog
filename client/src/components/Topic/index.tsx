@@ -11,7 +11,11 @@ import TagsSelector, {TagsSelectorType} from "../TagsSelector";
 import ITag from "../../interface/ITag";
 import cn from "classnames";
 
+import 'react-markdown-editor-lite/lib/index.css';
+
 import s from './Topic.module.css';
+import MarkdownViewer from "../MarkdownViewer";
+import MarkdownWriter from "../MarkdownWriter";
 
 export interface TopicProps {
     type: TopicPageType,
@@ -38,14 +42,18 @@ const Topic: React.FC<TopicProps> = ({
         setTags(value?.tags || []);
     }, [value?.tags])
 
-    const handleChangeName = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const targetValue = e.target.value;
-        setName(targetValue);
+    const handleChangeName = (data: {
+        text: string;
+        html: string;
+    }) => {
+        setName(data.text);
     }
 
-    const handleChangeFullText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const targetValue = e.target.value;
-        setFullText(targetValue);
+    const handleChangeFullText = (data: {
+        text: string;
+        html: string;
+    }) => {
+        setFullText(data.text);
     }
 
     const readOnly = type == TopicPageType.VIEW;
@@ -97,17 +105,21 @@ const Topic: React.FC<TopicProps> = ({
         {type == TopicPageType.EDIT ? "Изменить" : "Создать"}
     </button>;
 
-    const topicName = readOnly ? <div className={s.topicName}>{name}</div> : <div className={s.topicField}>
-        <textarea onChange={handleChangeName} disabled={readOnly} value={name}/>
+    const topicName = readOnly ? <div className={s.topicName}>
+        <MarkdownViewer text={name}/>
+    </div> : <div className={s.topicField}>
+        <MarkdownWriter fullText={name} handleChangeFullText={handleChangeName} className={s.topicNameArea} />
     </div>
 
-    const topicText = readOnly ? <div className={s.topicText}>{fullText}</div> :<div className={s.topicField}>
-        <textarea className={s.topicTextArea} onChange={handleChangeFullText} disabled={readOnly} value={fullText}/>
+    const topicText = readOnly ? <div className={s.topicText}>
+        <MarkdownViewer text={fullText}/>
+    </div> :<div className={cn(s.topicField, s.topicFieldWithText)}>
+        <MarkdownWriter fullText={fullText} handleChangeFullText={handleChangeFullText} className={s.topicTextArea} />
     </div>
 
     return (
         <div className={s.topicArea}>
-            <div className="topicInfoArea">
+            <div className={readOnly ? "" : s.topicInfoArea}>
                 {topicName}
                 {topicText}
             </div>

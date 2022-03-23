@@ -4,7 +4,10 @@ interface CssExports {
   'button': string;
   'topicArea': string;
   'topicField': string;
+  'topicFieldWithText': string;
+  'topicInfoArea': string;
   'topicName': string;
+  'topicNameArea': string;
   'topicText': string;
   'topicTextArea': string;
 }

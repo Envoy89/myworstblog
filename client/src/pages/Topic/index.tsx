@@ -38,9 +38,9 @@ const TopicPage: React.FC<TopicPageProps> = ({ id, type }) => {
     }
 
     return (
-        <div>
+        <>
             {topic}
-        </div>
+        </>
     )
 }
 
