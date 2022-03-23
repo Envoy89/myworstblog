@@ -3,6 +3,8 @@ import ITag from "../../interface/ITag";
 import {addTag, getTags} from "../../api/tags";
 import TagList from "../TagList";
 
+import s from './TagsSelector.module.css';
+
 export enum TagsSelectorType {
     EDIT,
     VIEW
@@ -44,9 +46,8 @@ const TagsSelector: React.FC<TagsSelectorProps> = ({type, tags, handleTagSelect}
     }
 
     const test = type === TagsSelectorType.VIEW ? null : <div>
-        <div className="tagSearchContainer">
-            <h6 className="tagSearchTitle">Тэги:</h6>
-            <div className="tagSearchText">
+        <div className={s.tagSearchContainer}>
+            <div className={s.tagSearchText}>
                 <input value={tagSearchString}
                        onChange={handleTagSearchStringChange}
                        onKeyDown={handleTagInputKeyDown}
@@ -54,17 +55,16 @@ const TagsSelector: React.FC<TagsSelectorProps> = ({type, tags, handleTagSelect}
                 />
             </div>
         </div>
-        <select size={15} onClick={handleClick} className="tagsSelectorList">
+        <select size={15} onClick={handleClick} className={s.tagsSelectorList}>
             {
                 tagsData && tagsData.tags && tagsData.tags.map((val: ITag) => {
-                    return <option className="selectableOption" value={val._id}>{val.name}</option>
+                    return <option className={s.selectableOption} value={val._id}>{val.name}</option>
                 })
             }
         </select>
     </div>
 
-
-    return <div className="tagsSelector">
+    return <div className={s.tagsSelector}>
         {test}
         <TagList tags={tags} handleTagSelect={handleTagSelect} />
     </div>
