@@ -1,0 +1,9 @@
+.tagsSelector {
+    margin: 15px;
+}
+
+.tagsSelectorView {
+    display: block;
+    margin: 0 15px 5px 15px;
+    overflow: hidden;
+}

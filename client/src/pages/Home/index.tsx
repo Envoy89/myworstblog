@@ -33,6 +33,7 @@ const Home = () => {
                     {
                         data && data.topics && data.topics.map((val: ITopic) => {
                             return <TopicSmallView
+                                key={val._id}
                                 _id = {val._id || 1}
                                 name={val.name}
                                 fullText={val.fullText}

@@ -16,8 +16,8 @@ const Pagination: React.FC<PaginationProps> = ({
     const pages = [];
     for (let i = 1; i <= pageCount; ++i) {
         const page = i === pageNumber ?
-            <li className="active"><a onClick={() => {changePage(i)}}>{i}</a></li> :
-            <li className="waves-effect"><a onClick={() => {changePage(i)}}>{i}</a></li>;
+            <li key={i} className="active"><a onClick={() => {changePage(i)}}>{i}</a></li> :
+            <li key={i} className="waves-effect"><a onClick={() => {changePage(i)}}>{i}</a></li>;
         pages.push(
             page
         )

@@ -3,12 +3,17 @@
     --text-color-on-main-color: white;
 
     --header-height: 65px;
-    --logo-height: 40px;
-    --logo-width: 251px;
-
     --footer-height: 48px;
 
     --pagination-panel-height: 30px;
+}
+
+@media only screen
+and (max-width:480px)  {
+    :root {
+        --header-height: 40px;
+        --footer-height: 28px;
+    }
 }
 
 body {
@@ -20,43 +25,6 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-}
-
-header {
-    align-items: flex-start;
-    height: var(--header-height);
-    background-color: var(--main-color);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.logo {
-    padding-left: 10px;
-    width: var(--logo-width);
-    font-size: var(--logo-height);
-    color: var(--text-color-on-main-color);
-    align-items: center;
-    margin: 0;
-    height: 100%;
-}
-
-.menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-.menu li {
-    padding-right: 15px;
-}
-
-.menu li a {
-    color: var(--text-color-on-main-color);
 }
 
 footer {
@@ -132,39 +100,6 @@ footer {
     cursor: pointer;
 }
 
-p.topicFullText {
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
-.topicControlButton {
-    padding-top: 10px !important;
-}
-
-.topicControlButton button:first-child {
-    margin-right: 5px;
-}
-
-.topicArea {
-    width: 100%;
-    height: 100%;
-    padding: 0 15px;
-}
-
-.topicField {
-    display: flex;
-    margin-bottom: 15px;
-}
-
-.fieldText {
-    font-size: 20px;
-    width: 80px;
-}
-
-.topicTextArea {
-    height: 200px;
-}
-
 .popupcontainer {
     min-width: 100vw;
     min-height: 100vh;
@@ -190,21 +125,6 @@ p.topicFullText {
     cursor: pointer;
 }
 
-.divider {
-    width: 100%;
-}
-
-.tagsSelector {
-    display: block;
-    height: 290px;
-    margin-bottom: 25px;
-}
-
-.tagsSelector select {
-    display: block;
-    height: 150px;
-}
-
 .selectedTagsList {
     display: flex;
 }
@@ -217,22 +137,6 @@ p.topicFullText {
     line-height: 1;
 }
 
-.selectableOption {
-    cursor: pointer;
-}
-
-.tagSearchContainer {
-    display: flex;
-}
-
 .tagSearchTitle {
     width: 5%;
-}
-
-.tagSearchText {
-    width: 95%;
-}
-
-.tagsSelectorList {
-    margin-bottom: 5px;
 }

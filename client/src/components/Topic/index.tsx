@@ -9,6 +9,9 @@ import { TopicPageType } from '../../pages/Topic';
 import showAlert from '../../utils/alert';
 import TagsSelector, {TagsSelectorType} from "../TagsSelector";
 import ITag from "../../interface/ITag";
+import cn from "classnames";
+
+import s from './Topic.module.css';
 
 export interface TopicProps {
     type: TopicPageType,
@@ -86,7 +89,7 @@ const Topic: React.FC<TopicProps> = ({
     }
 
     const button = <button 
-        className="btn waves-effect waves-light" 
+        className={cn(s.button, "btn", "waves-effect", "waves-light")}
         type="submit" 
         name="action"
         onClick={type == TopicPageType.EDIT ? handleEdit : handleCreate}
@@ -94,33 +97,24 @@ const Topic: React.FC<TopicProps> = ({
         {type == TopicPageType.EDIT ? "Изменить" : "Создать"}
     </button>;
 
-    const setOneTag = (value: ITag) => {
-        let newTags = [...tags];
-        if (newTags.find(x => x._id === value._id)) {
-            newTags = newTags.filter(x => x._id != value._id);
-        } else {
-            newTags.push(value);
-        }
-        setTags(newTags);
-    }
+    const topicName = readOnly ? <div className={s.topicName}>{name}</div> : <div className={s.topicField}>
+        <textarea onChange={handleChangeName} disabled={readOnly} value={name}/>
+    </div>
+
+    const topicText = readOnly ? <div className={s.topicText}>{fullText}</div> :<div className={s.topicField}>
+        <textarea className={s.topicTextArea} onChange={handleChangeFullText} disabled={readOnly} value={fullText}/>
+    </div>
 
     return (
-        <div className="topicArea">
-            <h4>Topic</h4>
+        <div className={s.topicArea}>
             <div className="topicInfoArea">
-                <div className="topicField">
-                    <div className="fieldText">Name:</div>
-                    <textarea onChange={handleChangeName} disabled={readOnly} value={name}/>
-                </div>
-                <div className="topicField">
-                    <div className="fieldText">Text:</div>
-                    <textarea className="topicTextArea" onChange={handleChangeFullText} disabled={readOnly} value={fullText}/>
-                </div>
+                {topicName}
+                {topicText}
             </div>
             <TagsSelector
                 type={readOnly ? TagsSelectorType.VIEW : TagsSelectorType.EDIT}
                 tags={tags}
-                handleTagSelect={readOnly ? () => {} : setOneTag}
+                handleTagSelect={readOnly ? () => {} : setTags}
             />
             {type == TopicPageType.EDIT || type == TopicPageType.CREATE ? button : null}
         </div>

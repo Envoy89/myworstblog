@@ -1,7 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ITag from "../../interface/ITag";
-import {addTag, getTags} from "../../api/tags";
+import {addTag, getTagsWithPromiseForSelector} from "../../api/tags";
 import TagList from "../TagList";
+
+import AsyncCreatableSelect from 'react-select/async-creatable';
+
+import s from './TagsSelector.module.css';
 
 export enum TagsSelectorType {
     EDIT,
@@ -11,63 +15,48 @@ export enum TagsSelectorType {
 interface TagsSelectorProps {
     type: TagsSelectorType,
     tags: ITag[],
-    handleTagSelect: (value: ITag) => void
+    handleTagSelect: (value: ITag[]) => void
 }
 
 const TagsSelector: React.FC<TagsSelectorProps> = ({type, tags, handleTagSelect}) => {
 
-    const [tagSearchString, setTagSearchString] = useState<string>("");
-    const [newTagName, setNewTagName] = useState<string>("");
+    const defaultData:any = [];
+    tags && tags.map((val: ITag) => {
+        defaultData.push({
+            label: val.name,
+            value: val._id
+        })
+    })
 
-    const { data: newTag } = addTag(newTagName);
-    const { data: tagsData } = getTags(tagSearchString);
+    console.log(defaultData);
 
-    useEffect(() => {
-        setTagSearchString("");
-        newTag && handleTagSelect(newTag);
-    }, [newTag])
+    const handleChange = (opt: any) => {
+        const tags:ITag[] = [];
 
-    const handleClick = (event: React.BaseSyntheticEvent) => {
-        const tag = tagsData?.tags.find(x => x._id === event.target?.value);
-        tag && handleTagSelect(tag);
-    }
-
-    const handleTagSearchStringChange = (value: React.ChangeEvent<HTMLInputElement>) => {
-        const searchString = value.target.value;
-        setTagSearchString(searchString);
-    }
-
-    const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Tab') {
-            setNewTagName(tagSearchString);
+        for (const i in opt) {
+            tags.push({
+                _id: opt[i].value,
+                name: opt[i].label
+            })
         }
+
+        handleTagSelect(tags);
     }
 
-    const test = type === TagsSelectorType.VIEW ? null : <div>
-        <div className="tagSearchContainer">
-            <h6 className="tagSearchTitle">Тэги:</h6>
-            <div className="tagSearchText">
-                <input value={tagSearchString}
-                       onChange={handleTagSearchStringChange}
-                       onKeyDown={handleTagInputKeyDown}
-                       placeholder="Введите для поиска (Tab чтобы добавить новый)"
-                />
-            </div>
+    return type === TagsSelectorType.VIEW ? <div className={s.tagsSelectorView}>
+            <TagList tags={tags} handleTagSelect={() => {}} />
         </div>
-        <select size={15} onClick={handleClick} className="tagsSelectorList">
-            {
-                tagsData && tagsData.tags && tagsData.tags.map((val: ITag) => {
-                    return <option className="selectableOption" value={val._id}>{val.name}</option>
-                })
-            }
-        </select>
-    </div>
-
-
-    return <div className="tagsSelector">
-        {test}
-        <TagList tags={tags} handleTagSelect={handleTagSelect} />
-    </div>
+        :
+        <div className={s.tagsSelector}>
+            <AsyncCreatableSelect
+                defaultOptions
+                defaultValue={defaultData}
+                isMulti
+                loadOptions={getTagsWithPromiseForSelector}
+                onChange={handleChange}
+                onCreateOption={async (tagName) => { await addTag(tagName); }}
+            />
+        </div>
 }
 
 export default TagsSelector;

@@ -14,7 +14,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
     },
-    watch: !NODE_ENV || NODE_ENV && NODE_ENV == 'development',
+    watch: !NODE_ENV || NODE_ENV && NODE_ENV === 'development',
     watchOptions: {
         ignored: /node_modules/,
         poll: 1000,
@@ -28,8 +28,21 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
+                use: [
+                    'style-loader',
+                    'css-modules-typescript-loader?modules',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                                localIdentName: '[name]__[local]__[hash:base64:5]',
+                                auto: /\.module\.\w+$/i,
+                            },
+                        },
+                    }
+                ],
+            },
         ]
     },
     plugins: [

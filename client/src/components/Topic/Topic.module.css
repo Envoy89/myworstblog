@@ -1,0 +1,40 @@
+.topicArea {
+    width: 100%;
+    height: 100%;
+}
+
+.topicName {
+    font-weight: 700;
+    padding: 10px 15px 10px 15px;
+}
+
+.topicText {
+    padding: 0 15px 15px 15px;
+}
+
+.topicField {
+    display: flex;
+    margin: 15px;
+}
+
+.topicTextArea {
+    height: 300px;
+}
+
+.button {
+    margin-left: 15px;
+    z-index: 0;
+}
+
+@media only screen
+and (max-width:480px)  {
+    .topicName {
+        font-size: 16px;
+        line-height: 30px;
+        padding: 5px 15px 5px 15px;
+    }
+
+    .topicText {
+        font-size: 14px;
+    }
+}
