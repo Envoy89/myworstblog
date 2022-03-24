@@ -1,0 +1,33 @@
+.topicsAndTagsContainer {
+    min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
+    max-height: calc(100vh - 115px);
+    display: flex;
+}
+
+.topicWithPaginationContainer {
+    overflow: auto;
+    width: 100%;
+}
+
+.topicWithPaginationContainer::-webkit-scrollbar {
+    width: 0;
+}
+
+.mainTopics {
+    height: calc(100% - var(--pagination-panel-height));
+    overflow: auto;
+    align-items: flex-start;
+}
+
+.paginationPanel {
+    align-items: flex-end;
+    height: var(--pagination-panel-height);
+}
+
+@media only screen
+and (min-width:1300px)  {
+    .topicWithPaginationContainer {
+        width: 60%;
+        margin-left: 20%;
+    }
+}

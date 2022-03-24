@@ -12,10 +12,12 @@ describe('Topic', () => {
     it('can be created correctly', async () => {
         const name = 'test';
         const fullText = 'test';
+        const createdDate = new Date();
 
         const topic = new Topic({
             name,
-            fullText
+            fullText,
+            createdDate
         });
         await topic.save();
 
@@ -32,11 +34,11 @@ describe('Topic', () => {
 
         const topicCount = 5;
 
-        const topics = [];
         for (let i = 0; i < topicCount; i++) {
             const topic = new Topic({
                 name: namePlaceholder + i,
-                fullText: fullTextPlaceHolder + i
+                fullText: fullTextPlaceHolder + i,
+                createdDate: new Date()
             });
 
             await topic.save();

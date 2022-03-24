@@ -17,11 +17,12 @@ interface TopicProps {
     _id: number,
     name: string,
     fullText: string,
-    tags?: ITag[]
+    tags?: ITag[],
+    createdDate?: Date
 }
 
 const TopicSmallView: React.FC<TopicProps> = ({
-    _id, name, fullText, tags
+    _id, name, fullText, tags, createdDate
 }) => {
 
     const isAuth = isAuthenticate();
@@ -73,6 +74,7 @@ const TopicSmallView: React.FC<TopicProps> = ({
             <div className={s.nameClass}>
                 <A href={`/topic/${_id}`}><MarkdownViewer text={name} /></A>
             </div>
+            <div className={s.createdDate}>{createdDate?.toLocaleDateString()}</div>
             {authUserButtons}
         </div>
         <div className={s.topicText}>

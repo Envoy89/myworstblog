@@ -25,7 +25,7 @@ router.get(
 
             const topicsCount = await Topic.count();
             const offset = limit * (pageNumber - 1);
-            const topics = await Topic.find().limit(limit).skip(offset);
+            const topics = await Topic.find().sort({createdDate: -1}).limit(limit).skip(offset);
 
             return res.json({
                 topics, topicsCount
@@ -50,7 +50,8 @@ router.post(
         try {
             const newTopic = new Topic({
                 name: req.body.name,
-                fullText: req.body.fullText
+                fullText: req.body.fullText,
+                createdDate: new Date()
             });
 
             if (req.body.tags && req.body.tags.length !== 0) {

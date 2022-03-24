@@ -4,6 +4,9 @@ import { navigate } from 'hookrouter';
 import { useState } from 'react';
 import { logIn, register } from '../../utils/auth';
 import showAlert from '../../utils/alert';
+import cn from 'classnames';
+
+import s from './Auth.module.css';
 
 interface AuthProps {
     isRegister ?: boolean
@@ -25,7 +28,10 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         showAlert("Error", e);
     }
 
-    const handleButton = async () => {
+    const registerOrLogin = async () => {
+        if (!login || !password) {
+            showAlert("Error", "Введите логин и пароль");
+        }
         if (isRegister) {
             await register(login, password, () => navigate(MyLinkEnum.HOME), alertError);
         } else {
@@ -33,21 +39,33 @@ const Auth: React.FC<AuthProps> = ({ isRegister }) => {
         }
     }
 
-    return <div>
+    const handleButton = async () => {
+        await registerOrLogin();
+    }
+
+    const enterKey = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            await registerOrLogin();
+        }
+    }
+
+    return <div className={s.root}>
         <input 
             type="text" 
             placeholder="login" 
             name="login" 
-            onChange={inputLogin} 
+            onChange={inputLogin}
+            onKeyDown={enterKey}
         />
         <input 
             type="text" 
             placeholder="password" 
             name="password"
             onChange={inputPassword}
+            onKeyDown={enterKey}
         />
         <button 
-            className="btn waves-effect waves-light" 
+            className={cn("btn", "waves-effect", "waves-light")}
             type="submit" 
             name="action"
             onClick={handleButton}

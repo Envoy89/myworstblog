@@ -31,11 +31,29 @@
     font-size: 15px;
 }
 
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.createdDate {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 15px;
+    color: #e0e0e0;
+}
+
 @media only screen
 and (max-width:480px)  {
     .nameClass {
         font-size: 16px;
         line-height: 30px;
+        max-width: 60%;
+    }
+
+    .createdDate {
+        max-width: 40%;
     }
 
     .topicControlButton {
@@ -52,13 +70,15 @@ and (min-width:480px)  {
     .nameClass {
         font-size: 22px;
         line-height: 40px;
-        max-width: 60%;
+        max-width: 50%;
     }
 
-    .buttonsContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+    .createdDate {
+        max-width: 25%;
+    }
+
+    .topicControlButton {
+        max-width: 25%;
     }
 
     .topicControlButton button {

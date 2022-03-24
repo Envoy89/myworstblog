@@ -11,6 +11,10 @@ const topicSchema = new Schema({
         type: String,
         required: true
     },
+    createdDate: {
+        type: Date,
+        required: true
+    },
     tags: [Tag.schema]
 });
 

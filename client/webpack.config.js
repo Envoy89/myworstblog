@@ -51,12 +51,17 @@ module.exports = {
         }),
         new CopyWebpackPlugin({ 
             patterns: [ 
-                { from: path.resolve(__dirname, 'public/css'), to: path.resolve(__dirname, 'dist/css') } 
+                {
+                    from: path.resolve(__dirname, 'public/css'),
+                    to: path.resolve(__dirname, 'dist/css')
+                }
             ]
         })
     ],
     devServer: {
-        contentBase: path.resolve('public'),
+        static: {
+            directory: path.join(__dirname, 'public'),
+        },
         port: 3001,
         open: true,
         hot: true,
