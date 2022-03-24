@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'buttonsContainer': string;
+  'createdDate': string;
   'nameClass': string;
   'tags': string;
   'topicControlButton': string;

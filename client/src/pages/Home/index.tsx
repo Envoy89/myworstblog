@@ -40,6 +40,7 @@ const Home = () => {
                                 name={val.name}
                                 fullText={val.fullText}
                                 tags={val.tags}
+                                createdDate={val.createdDate ? new Date(val.createdDate) : new Date()}
                             />
                         })
                     }
