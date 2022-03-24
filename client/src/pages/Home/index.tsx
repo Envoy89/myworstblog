@@ -8,6 +8,8 @@ import ITopic from '../../interface/ITopic';
 import ITopicResponse from "../../interface/ITopicResponse";
 import Pagination from "../../components/Pagination";
 
+import s from './Home.module.css';
+
 const LIMIT = 10;
 
 const Home = () => {
@@ -27,9 +29,9 @@ const Home = () => {
     } 
 
     return (
-        <div className="topicsAndTagsContainer">
-            <div className="topicWithPaginationContainer">
-                <div className="mainTopics">
+        <div className={s.topicsAndTagsContainer}>
+            <div className={s.topicWithPaginationContainer}>
+                <div className={s.mainTopics}>
                     {
                         data && data.topics && data.topics.map((val: ITopic) => {
                             return <TopicSmallView
@@ -42,7 +44,7 @@ const Home = () => {
                         })
                     }
                 </div>
-                <div className="paginationPanel">
+                <div className={s.paginationPanel}>
                     <Pagination
                         pageNumber={currentPage}
                         elementCount={data?.topicsCount}

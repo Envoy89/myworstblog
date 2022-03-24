@@ -77,28 +77,6 @@ footer {
     justify-content: space-between;
 }
 
-.topicsAndTagsContainer {
-    min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
-    max-height: calc(100vh - 115px);
-    display: flex;
-}
-
-.topicWithPaginationContainer {
-    border-right: 1px solid #e0e0e0;
-    overflow: auto;
-    width: 100%;
-}
-
-.topicWithPaginationContainer::-webkit-scrollbar {
-    width: 0;
-}
-
-.mainTopics {
-    height: calc(100% - var(--pagination-panel-height));
-    overflow: auto;
-    align-items: flex-start;
-}
-
 .topicList {
     width: 85%;
     border-right: 1px solid #e0e0e0;
@@ -108,11 +86,6 @@ footer {
 
     width: 15%;
     height: 100%;
-}
-
-.paginationPanel {
-    align-items: flex-end;
-    height: var(--pagination-panel-height);
 }
 
 .pagination {
