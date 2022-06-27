@@ -1,4 +1,4 @@
-[![Build Status](https://drone2.theruzil.com/api/badges/Envoy89/myworstblog/status.svg)](https://drone2.theruzil.com/Envoy89/myworstblog)
+[![Build Status](https://drone.theruzil.com/api/badges/Envoy89/myworstblog/status.svg)](https://drone.theruzil.com/Envoy89/myworstblog)
 
 # Простенький бложик
 
